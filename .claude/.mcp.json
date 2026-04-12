@@ -1,0 +1,35 @@
+{
+  "mcpServers": {
+    "google_sheets": {
+      "command": "npx",
+      "args": ["-y", "mcp-google-sheets"],
+      "env": {
+        "CREDENTIALS_PATH": "./secrets/credentials.json",
+        "TOKEN_PATH": "./secrets/token.json"
+      }
+    },
+    "google_calendar": {
+      "command": "npx",
+      "args": ["-y", "google-calendar-mcp"],
+      "env": {}
+    },
+    "gdrive": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-gdrive"],
+      "env": {
+        "GOOGLE_APPLICATION_CREDENTIALS": "./secrets/credentials.json"
+      }
+    },
+    "bigquery": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@ergut/mcp-bigquery-server",
+        "--project-id",
+        "bigquery-jukust",
+        "--location",
+        "asia-northeast1"
+      ]
+    }
+  }
+}

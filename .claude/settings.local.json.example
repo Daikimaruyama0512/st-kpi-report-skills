@@ -1,0 +1,71 @@
+{
+  "permissions": {
+    "allow": [
+      "Read",
+      "Edit",
+      "Write",
+      "Glob",
+      "Grep",
+      "Bash(*)",
+      "WebFetch(domain:docs.google.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:developers.google.com)",
+      "WebSearch",
+      "mcp__google_sheets__get_sheet_data",
+      "mcp__google_sheets__update_cells",
+      "mcp__google_sheets__batch_update_cells",
+      "mcp__google_sheets__list_sheets",
+      "mcp__google_sheets__list_spreadsheets",
+      "mcp__claude_ai_Google_Calendar__gcal_list_events",
+      "mcp__claude_ai_Google_Calendar__gcal_create_event",
+      "mcp__claude_ai_Google_Calendar__gcal_list_calendars",
+      "mcp__gdrive__search",
+      "mcp__bigquery__query"
+    ]
+  },
+  "hooks": {
+    "PostCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python {{PROJECT_ROOT}}/.claude/hooks/post-compact-inject.py",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python {{PROJECT_ROOT}}/.claude/hooks/pre-write-secrets-scan.py",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python {{PROJECT_ROOT}}/.claude/hooks/pre-write-secrets-scan.py",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node {{PROJECT_ROOT}}/.claude/hooks/refresh-google-tokens.js"
+          }
+        ]
+      }
+    ]
+  }
+}

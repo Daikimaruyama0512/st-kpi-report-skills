@@ -1,0 +1,7 @@
+secrets/
+!secrets/.gitkeep
+.env
+*.pyc
+__pycache__/
+.claude/settings.local.json
+node_modules/
