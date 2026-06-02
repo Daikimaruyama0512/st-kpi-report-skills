@@ -29,7 +29,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python {{PROJECT_ROOT}}/.claude/hooks/post-compact-inject.py",
+            "command": "python /Users/119322/claude-code-template_af/.claude/hooks/post-compact-inject.py",
             "timeout": 10
           }
         ]
@@ -41,7 +41,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python {{PROJECT_ROOT}}/.claude/hooks/pre-write-secrets-scan.py",
+            "command": "python /Users/119322/claude-code-template_af/.claude/hooks/pre-write-secrets-scan.py",
             "timeout": 10
           }
         ]
@@ -51,7 +51,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python {{PROJECT_ROOT}}/.claude/hooks/pre-write-secrets-scan.py",
+            "command": "python /Users/119322/claude-code-template_af/.claude/hooks/pre-write-secrets-scan.py",
             "timeout": 10
           }
         ]
@@ -62,7 +62,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node {{PROJECT_ROOT}}/.claude/hooks/refresh-google-tokens.js"
+            "command": "node /Users/119322/claude-code-template_af/.claude/hooks/refresh-google-tokens.js"
           }
         ]
       }

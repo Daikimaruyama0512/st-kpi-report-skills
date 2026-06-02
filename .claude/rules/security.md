@@ -5,9 +5,9 @@
 - **環境変数の利用**: 全ての機密情報は `.env` または `secrets/` フォルダ内の外部ファイル（`token.json`等）から動的に読み込んでください。
 - **`.env` / 認証ファイルの標準パス（スキル・スクリプト作成時は必ずこのパスを使うこと）**:
   ```python
-  ENV_FILE   = r"{{PROJECT_ROOT}}\.env"
-  TOKEN_FILE = r"{{PROJECT_ROOT}}\secrets\token.json"
-  CREDS_FILE = r"{{PROJECT_ROOT}}\secrets\credentials.json"
+  ENV_FILE   = r"/Users/119322/claude-code-template_af\.env"
+  TOKEN_FILE = r"/Users/119322/claude-code-template_af\secrets\token.json"
+  CREDS_FILE = r"/Users/119322/claude-code-template_af\secrets\credentials.json"
   ```
 - **Google OAuth スコープ（統一指定）**: スキル・スクリプトでGoogle APIを使う場合、以下のスコープをそのまま使うこと。個別に絞らない（スコープ不足で再認証が発生するため）。
   ```python

@@ -46,7 +46,7 @@
 - 使用するビューは `knowledge/bigquery-schema.md` を参照すること
 - クエリは必ずCTEパターンで書く（ビューに直接GROUP BY+HAVINGを書かない）
 - クエリ実行前にスキャン量が大きい場合は確認を取る
-- 認証は `{{PROJECT_ROOT}}\secrets\token.json` のOAuth方式（サービスアカウント禁止）
+- 認証は `/Users/119322/claude-code-template_af\secrets\token.json` のOAuth方式（サービスアカウント禁止）
 
 ---
 

@@ -27,8 +27,8 @@ SCOPES = [
     'https://www.googleapis.com/auth/drive',
     'https://www.googleapis.com/auth/spreadsheets',
 ]
-TOKEN_FILE = r'{{PROJECT_ROOT}}\secrets\token.json'
-CREDS_FILE = r'{{PROJECT_ROOT}}\secrets\credentials.json'
+TOKEN_FILE = r'/Users/119322/claude-code-template_af\secrets\token.json'
+CREDS_FILE = r'/Users/119322/claude-code-template_af\secrets\credentials.json'
 
 creds = None
 if os.path.exists(TOKEN_FILE):

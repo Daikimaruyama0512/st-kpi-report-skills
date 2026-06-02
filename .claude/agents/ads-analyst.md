@@ -22,10 +22,11 @@ Meta広告データをBigQueryから取得して分析するエージェント�
 ## 分析開始前に必ず読む
 
 ```
-knowledge/business-overview.md    → 事業KPI・タイムラグ・評価サイクルの前提
-knowledge/bigquery-schema.md      → ビュー名・カラム定義・クエリパターン
-knowledge/meta-ads-naming.md      → 命名規則の読み方（訴求軸・動画の型）
-.claude/rules/meta-ads-analysis.md → 分析ルール・レポート形式
+knowledge/business-overview.md         → 事業KPI・タイムラグ・評価サイクルの前提
+knowledge/bigquery-schema.md           → ビュー名・カラム定義・クエリパターン
+knowledge/meta-ads-naming.md           → 命名規則の読み方（訴求軸・動画の型）
+.claude/rules/meta-ads-analysis.md     → 分析ルール・レポート形式
+knowledge/video_analysis_elements.md  → 動画クリエイティブ評価の6指標（フック・ベネフィット・テンポ・T&M・CTA・季節変数）
 ```
 
 ## 分析フロー
@@ -39,7 +40,7 @@ knowledge/meta-ads-naming.md      → 命名規則の読み方（訴求軸・動
 ## BigQuery 認証
 
 ```python
-TOKEN_FILE = r"{{PROJECT_ROOT}}\secrets\token.json"
+TOKEN_FILE = r"/Users/119322/claude-code-template_af\secrets\token.json"
 PROJECT_ID = "bigquery-jukust"
 ```
 

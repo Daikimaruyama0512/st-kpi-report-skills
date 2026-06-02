@@ -42,7 +42,7 @@ import json, urllib.request
 from google.oauth2.credentials import Credentials
 from google.auth.transport.requests import Request
 
-TOKEN_FILE = r"{{PROJECT_ROOT}}\secrets\token.json"
+TOKEN_FILE = r"/Users/119322/claude-code-template_af\secrets\token.json"
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 
 creds = Credentials.from_authorized_user_file(TOKEN_FILE, SCOPES)
@@ -75,7 +75,7 @@ import json, urllib.request
 from google.oauth2.credentials import Credentials
 from google.auth.transport.requests import Request
 
-TOKEN_FILE = r"{{PROJECT_ROOT}}\secrets\token.json"
+TOKEN_FILE = r"/Users/119322/claude-code-template_af\secrets\token.json"
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 
 creds = Credentials.from_authorized_user_file(TOKEN_FILE, SCOPES)
