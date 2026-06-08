@@ -837,6 +837,7 @@ WITH monthly AS (
     DATE_TRUNC(target_date, MONTH) AS month_date,
     SUM(spend)                 AS spend,
     SUM(complete_registration) AS line_cv,
+    COALESCE(SUM(custom_cv_2), 0) AS obo_cv,
     SUM(link_clicks)           AS link_clicks,
     SUM(impressions)           AS impressions
   FROM `{BQ_VIEW}`
@@ -846,7 +847,9 @@ WITH monthly AS (
 SELECT
   month_label,
   line_cv,
+  obo_cv,
   SAFE_DIVIDE(spend, NULLIF(line_cv, 0))                 AS cpf,
+  SAFE_DIVIDE(spend, NULLIF(obo_cv, 0))                  AS obo_cpa,
   spend,
   SAFE_DIVIDE(link_clicks, NULLIF(impressions, 0)) * 100 AS ctr,
   SAFE_DIVIDE(line_cv, NULLIF(link_clicks, 0))     * 100 AS cvr,
@@ -857,14 +860,20 @@ ORDER BY month_date
         m_rows = list(client.query(monthly_query).result())
         m_data = []
         for r in m_rows:
+            obo_v  = float(r['obo_cv'] or 0)
+            line_v = float(r['line_cv'] or 0)
+            # custom_cv_2 が 0 または LINE登録CVと同値の月は応募CV無効とする
+            obo_valid = obo_v > 0 and obo_v != line_v
             m_data.append({
                 'month_label': r['month_label'],
-                'line_cv':     int(r['line_cv'] or 0),
-                'cpf':         round(float(r['cpf']), 0) if r['cpf'] else '',
+                'line_cv':     int(line_v),
+                'obo_cv':      int(obo_v)                          if obo_valid else '',
+                'obo_cpa':     round(float(r['obo_cpa']), 0)       if (obo_valid and r['obo_cpa']) else '',
+                'cpf':         round(float(r['cpf']), 0)           if r['cpf'] else '',
                 'spend':       round(float(r['spend'] or 0), 0),
-                'ctr':         round(float(r['ctr']), 2)  if r['ctr'] else '',
-                'cvr':         round(float(r['cvr']), 2)  if r['cvr'] else '',
-                'cpm':         round(float(r['cpm']), 0)  if r['cpm'] else '',
+                'ctr':         round(float(r['ctr']), 2)           if r['ctr'] else '',
+                'cvr':         round(float(r['cvr']), 2)           if r['cvr'] else '',
+                'cpm':         round(float(r['cpm']), 0)           if r['cpm'] else '',
             })
         months   = [d['month_label'] for d in m_data]
         num_cols = len(m_data)  # 実際の月数（通常6）
@@ -882,14 +891,14 @@ ORDER BY month_date
 
         m_sheet_data = [
             ['月']         + months,
-            ['LINE登録CV'] + [d['line_cv'] for d in m_data],
-            ['応募CV']     + ['' for _ in m_data],  # custom_cv_2バグのため空
-            ['応募CPA']    + ['' for _ in m_data],  # 同上
-            ['COST']       + [d['spend']  for d in m_data],
-            ['CPF']        + [d['cpf']    for d in m_data],
-            ['CTR(%)']     + [d['ctr']    for d in m_data],
-            ['CVR(%)']     + [d['cvr']    for d in m_data],
-            ['CPM']        + [d['cpm']    for d in m_data],
+            ['LINE登録CV'] + [d['line_cv']  for d in m_data],
+            ['応募CV']     + [d['obo_cv']   for d in m_data],  # obo_valid=Falseの月は空文字
+            ['応募CPA']    + [d['obo_cpa']  for d in m_data],  # 同上
+            ['COST']       + [d['spend']    for d in m_data],
+            ['CPF']        + [d['cpf']      for d in m_data],
+            ['CTR(%)']     + [d['ctr']      for d in m_data],
+            ['CVR(%)']     + [d['cvr']      for d in m_data],
+            ['CPM']        + [d['cpm']      for d in m_data],
         ]
         # 書き込み前に全範囲クリア（前回より月数が少ない場合に古いデータが残るのを防ぐ）
         svc.spreadsheets().values().clear(
