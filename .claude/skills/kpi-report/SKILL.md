@@ -151,6 +151,38 @@ SPREADSHEET_ID: 1xXeCl4Xbkxz-w_jT49TmA3-voruL2cTbF1f308hZ5vQ
 
 ---
 
+## STEP 3b（任意）: creative_trend_insights.md を更新する
+
+**トリガー**: 「insights更新して」「シナリオ向けに傾向更新して」「クリエイティブ傾向まとめて」と言われたら実行。
+
+### 実行手順
+
+```bash
+python3 scripts/analysis/analyze_recent_creatives.py
+```
+
+→ `scripts/data/recent_creative_analysis.json` に分析結果が出力される。
+
+### 更新するセクション
+
+JSONを読み込み、`knowledge/creative/creative_trend_insights.md` の以下セクションを上書きする:
+
+| セクション | 更新内容 |
+|---|---|
+| `分析スコープ` | 期間・対象広告数・spend合計・CV合計 |
+| `1. CTA別成果` | ペルソナLP / ブランド診断 / 気軽に診断 の CPA・CV・広告数・前回比 |
+| `2. 訴求セグメント別成果` | タイパ / 単願 / 併願 の CPA・CV・spend |
+| `3. 直近TOPクリエイティブ` | CPA昇順上位5件・勝ちパターンの共通要素 |
+| `シナリオ設計ガイドライン` | 月・直近データを踏まえた推奨訴求・NG訴求 |
+| `今月の季節変数` | 更新日・月の需要スコア・心理フェーズ・推奨CTA |
+
+### 更新後の確認
+
+- ファイル冒頭の更新日と末尾の `次回更新:` を今日の日付に変更する
+- `create-scenario` スキル実行時に最新データが自動で反映される
+
+---
+
 # CA モード
 
 ## このスキルの流れ（CA）

@@ -128,7 +128,8 @@ BigQuery直近30日データ（2026年6月4日時点）から導出した傾向�
 
 ## 分析方法・注意事項
 
-- 分析スクリプト: `scripts/analyze_recent_creatives.py`（直近30日分析）、`scripts/analyze_st_creatives.py`（詳細分析用）
+- 分析スクリプト: `scripts/analysis/analyze_recent_creatives.py`（直近30日分析）、`scripts/analysis/analyze_st_creatives.py`（詳細分析用）
 - 字幕文字数はBigQuery `scenario`カラムの値。直近30日はほぼNULLのため前回90日値を継続参照
 - 旧命名規則広告（01タイパ/02単願/03併願 形式）が直近主力。新命名規則（NV_C等）移行後は再分類が必要
-- 次回更新: シナリオ大型施策変更後または毎月月初に `python3 scripts/analyze_recent_creatives.py` を実行して本ファイルを手動更新
+- **更新方法**: KPI報告後に「insights更新して」と言うと `kpi-report` スキルの STEP 3b が実行され、このファイルが自動更新される
+- 次回更新: シナリオ大型施策変更後または毎月月初に `python3 scripts/analysis/analyze_recent_creatives.py` を実行

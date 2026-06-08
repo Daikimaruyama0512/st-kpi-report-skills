@@ -42,7 +42,7 @@ description: 「シナリオ作って」「シナリオ修正して」「〇月�
 | `knowledge/target/who_what_how.md` | Who/What/How・ペルソナ詳細・提供価値 |
 | `knowledge/creative/FY25_STSNS広告PDCA管理_LP.md` | LPフレームワーク整理（PASONA/QUEST構成・CTA別訴求軸） |
 | `knowledge/data/ST_Meta広告集計さん_KPI報告.md` | 直近KPI実績・CTA別応募CPA・施策進捗・ネクストアクション |
-| `knowledge/creative/creative_trend_insights.md` | **BigQuery実績データから導出したCTA・訴求軸・字幕文字数・テンポの成果傾向（最新分析）** |
+| `knowledge/creative/creative_trend_insights.md` | **BigQuery実績データから導出したCTA・訴求軸・字幕文字数・テンポの成果傾向（最新分析）** ← kpi-reportスキルのSTEP 3b で更新される |
 | `knowledge/creative/monthly_seasonal_variables.md` | **月別季節変数マスタ（12ヶ月のセグメント割合・フックアイデア・推奨CTA・NG表現）← STEP 3で対象月のみ参照** |
 
 ファイルが存在しない場合はユーザーに確認してから進む。
