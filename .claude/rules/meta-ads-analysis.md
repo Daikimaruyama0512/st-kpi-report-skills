@@ -13,7 +13,7 @@
 
 1. 直近90日の広告別 CPA（`SAFE_DIVIDE(spend, purchase)`）でランク付け
 2. spend ≥ 1万円のみ評価対象にする
-3. 広告名（`ad_name`）を命名規則に照らし、訴求軸・動画の型を分類する（`knowledge/meta-ads-naming.md` 参照）
+3. 広告名（`ad_name`）を命名規則に照らし、訴求軸・動画の型を分類する（`knowledge/creative/meta-ads-naming.md` 参照）
 4. デモグラビューで25-34歳のCVRを確認し、ベースラインと比較する
 5. CTAを確認する（「LINE登録して」と「適職診断してみて」は難易度が異なるため同列比較しない）
 
@@ -43,7 +43,7 @@
 
 ### BigQuery利用時の注意
 
-- 使用するビューは `knowledge/bigquery-schema.md` を参照すること
+- 使用するビューは `knowledge/data/bigquery-schema.md` を参照すること
 - クエリは必ずCTEパターンで書く（ビューに直接GROUP BY+HAVINGを書かない）
 - クエリ実行前にスキャン量が大きい場合は確認を取る
 - 認証は `/Users/119322/claude-code-template_af\secrets\token.json` のOAuth方式（サービスアカウント禁止）
@@ -60,7 +60,7 @@
 
 ### 命名規則の解釈ルール
 
-- プレフィックスは `knowledge/meta-ads-naming.md` のマスタ準拠で読む
+- プレフィックスは `knowledge/creative/meta-ads-naming.md` のマスタ準拠で読む
 - **自己解釈禁止**: `NV_` を "Narrative Video" などと独自解釈しない
 - 旧命名規則（`FM` / `V_` / `CA_`）はシナリオNULLの可能性が高い → プレフィックスから推定し「推定:」と明記
 - 「データがないから分析できない」とは言わない。推定ベースで継続する

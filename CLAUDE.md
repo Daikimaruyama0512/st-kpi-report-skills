@@ -9,9 +9,9 @@ Meta広告・Google広告運用メンバー向けClaude Codeワークスペー�
 
 | ファイル | 内容 |
 |---|---|
-| `knowledge/business-overview.md` | CA・ST事業概要・KPI・タイムラグ・運用ルール |
-| `knowledge/bigquery-schema.md` | BigQueryビュー名・カラム定義・クエリパターン |
-| `knowledge/meta-ads-naming.md` | Meta広告命名規則マスタ（訴求軸・動画の型） |
+| `knowledge/business/business-overview.md` | CA・ST事業概要・KPI・タイムラグ・運用ルール |
+| `knowledge/data/bigquery-schema.md` | BigQueryビュー名・カラム定義・クエリパターン |
+| `knowledge/creative/meta-ads-naming.md` | Meta広告命名規則マスタ（訴求軸・動画の型） |
 
 ---
 
@@ -24,9 +24,19 @@ claude-code-template_af/
 │   ├── skills/       # スキル定義（setup, gdoc, gdrive, write-sheet等）
 │   ├── agents/       # エージェント定義（ads-analyst, google-workspace）
 │   └── hooks/        # 自動実行フック（シークレット検知・トークン更新等）
-├── knowledge/        # 事前配布ナレッジ（セットアップ後すぐ使える）
+├── knowledge/
+│   ├── business/     # 事業・戦略ドキュメント（business-overview, fy26/fy25 overview）
+│   ├── target/       # ターゲット・インサイト（customer_info, who_what_how, Prerequisites/）
+│   ├── creative/     # クリエイティブ・シナリオ（meta-ads-naming, sns_ads_scenario_master等）
+│   └── data/         # データ・KPI参照（bigquery-schema, ST_Meta集計さん等）
+├── scripts/
+│   ├── kpi/          # KPI報告・グラフ生成（kpi_report_st/ca, create_monthly_charts）
+│   ├── sheets/       # スプレッドシート操作・タブ作成
+│   ├── analysis/     # クリエイティブ・シナリオ分析
+│   ├── read/         # シート・ドキュメント読み取り
+│   ├── utils/        # ユーティリティ（reauth_google, security_alert, update_seasonal_insights）
+│   └── data/         # 出力データ（JSON/CSV）
 ├── secrets/          # 認証情報（.gitignore済・token.json配置先）
-└── scripts/          # ユーティリティ（再認証・セキュリティアラート）
 ```
 
 ---
@@ -56,7 +66,7 @@ claude-code-template_af/
 | リージョン | `asia-northeast1` |
 | 認証 | `secrets/token.json`（OAuth・サービスアカウント禁止） |
 
-詳細は `knowledge/bigquery-schema.md` を参照。
+詳細は `knowledge/data/bigquery-schema.md` を参照。
 
 ---
 
@@ -67,4 +77,4 @@ claude-code-template_af/
 - KPI評価は**直近90日累計**ベース。週次数値は「参考のみ」として扱うこと
 - Meta FV登録→面談申込は中央値40日のラグがある。直近40日以内のCV数は過小評価として扱うこと
 - 月間広告費を10%以上超過させる変更の前に必ず確認を取ること
-- 命名規則の解釈は `knowledge/meta-ads-naming.md` のマスタ準拠で行うこと（自己解釈禁止）
+- 命名規則の解釈は `knowledge/creative/meta-ads-naming.md` のマスタ準拠で行うこと（自己解釈禁止）

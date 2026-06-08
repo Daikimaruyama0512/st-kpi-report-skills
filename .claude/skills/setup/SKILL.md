@@ -183,7 +183,7 @@ ls secrets/credentials.json 2>/dev/null
 ```
 
 - **存在する場合**: 「credentials.json を検出しました。Google認証を実行します。」
-  → `python scripts/reauth_google.py` を実行（スクリプトが存在する場合）
+  → `python scripts/utils/reauth_google.py` を実行（スクリプトが存在する場合）
   → スクリプトが存在しない場合は Phase 6-3 のインライン認証を実行
 
 - **存在しない場合**: 以下の手順を表示して待機:

@@ -396,10 +396,11 @@ except Exception as e:
 print("\n=== STEP 5: Gemini AI テキスト生成 ===")
 
 gemini_texts = {
-    'sesaku':  '[Gemini未設定]',
-    'youin':   '[Gemini未設定]',
-    'shisa':   '[Gemini未設定]',
-    'next':    '[Gemini未設定]',
+    'sesaku':   '[Gemini未設定]',
+    'youin':    '[Gemini未設定]',
+    'shisa':    '[Gemini未設定]',
+    'next':     '[Gemini未設定]',
+    'creative': '[Gemini未設定]',
 }
 
 if GEMINI_API_KEY:
@@ -408,16 +409,17 @@ if GEMINI_API_KEY:
         genai.configure(api_key=GEMINI_API_KEY)
         model = genai.GenerativeModel('gemini-2.5-pro')
 
-        # 集計サマリー
+        # 集計サマリー（LINE_CPA・CTR・CVR全列）
         group_lines = []
         for gname, g in group_totals.items():
             if gname == 'その他':
                 continue
+            line_cpa = g['spend'] / g['cv'] if g['cv'] > 0 else None
             group_lines.append(
                 f"- {gname}: spend={fmt_num(g['spend'])} / LINE_CV={g['cv']}"
-                f" / 応募CV={'N/A' if not use_obo else int(g['obo_cv'])}"
-                f" / 応募CPA={fmt_num(g['obo_cpa'])} {g['cpa_mark']}"
+                f" / LINE_CPA={fmt_num(line_cpa)}"
                 f" / CTR={fmt_pct(g['ctr'])} / CVR={fmt_pct(g['cvr'])}"
+                f" / 応募CPA={fmt_num(g['obo_cpa'])} {g['cpa_mark']}"
             )
 
         cta_lines = []
@@ -426,13 +428,22 @@ if GEMINI_API_KEY:
                 continue
             cta_lines.append(
                 f"- {cta}: spend={fmt_num(t['spend'])} / LINE_CV={t['cv']}"
+                f" / LINE_CPA={fmt_num(t['cpf'])}"
                 f" / 応募CPA={fmt_num(t['obo_cpa'])}"
             )
 
-        top_ads_lines = [
-            f"  {i+1}. 「{str(r['ad_name'])[:40]}」 spend={fmt_num(r['spend'])} LINE_CV={r['cv']} 応募CPA={fmt_num(r.get('obo_cpa')) if use_obo else 'N/A'}"
-            for i, r in enumerate(ad_rows[:5])
-        ]
+        # 上位15件・scenario・CTR・CVRを含める
+        top_ads_lines = []
+        for i, r in enumerate(ad_rows[:15]):
+            scenario_str = str(r.get('scenario') or 'なし')[:25]
+            top_ads_lines.append(
+                f"  {i+1}. 「{str(r['ad_name'])[:45]}」"
+                f" [訴求:{scenario_str}]"
+                f" spend={fmt_num(r['spend'])} / LINE_CV={r['cv']}"
+                f" / LINE_CPA={fmt_num(r.get('cpa'))}"
+                f" / CTR={fmt_pct(r.get('ctr'))} / CVR={fmt_pct(r.get('cvr'))}"
+                f" / 応募CPA={fmt_num(r.get('obo_cpa')) if use_obo else 'N/A'}"
+            )
 
         budget_progress = (
             f"{float(total.get('spend') or 0) / budget * 100:.1f}%" if budget and budget > 0 else 'N/A'
@@ -440,54 +451,84 @@ if GEMINI_API_KEY:
         target_progress = (
             f"{float(total.get('cv') or 0) / target_cv * 100:.1f}%" if target_cv and target_cv > 0 else 'N/A'
         )
+        line_cpa_total = fmt_num(total.get('cpa'))
 
         prompt = f"""
-あなたはMeta広告運用の専門家です。以下のST（塾講師ステーション）のKPIデータを分析して、4セクションのレポートを日本語で生成してください。
+あなたはMeta広告運用の専門家です。以下のST（塾講師ステーション）KPIデータを分析し、4セクションのレポートを日本語で生成してください。
+
+## 分析の前提・評価基準
+- STは塾講師アルバイト・求人媒体サービス
+- 最重要KPI: LINE登録CV → 応募CV（ナーチャリング経由。タイムラグ中央値40日）
+- 直近40日以内の応募CVは過小評価の可能性あり（参考値として扱う）
+- LINE登録CPA評価: ≤¥30,000=良好 / ≤¥50,000=要観察 / >¥50,000=要改善
+- 応募CPA評価: ≤¥20,000=良好 / ≤¥30,000=要観察 / >¥30,000=要見直し
+- 予算消化率: 85%未満=ペース遅れ / 85〜100%=適正 / 超過=要確認
+- 広告名の命名規則: 先頭の番号＋アンダースコアが訴求軸（例: 01タイパ=タイパ訴求、02単願=単願訴求）
+  CTA種別: LP=ペルソナLP / 診断=診断系フォーム / SNS=オーガニック組み合わせ
 
 ## 対象期間
 {start_date} 〜 {end_date}（{week_label}）
 
 ## 全体KPI
-- 広告費合計: {fmt_num(total.get('spend'))} / 月間予算: {fmt_num(budget)} / 予算進捗: {budget_progress}
-- LINE登録CV: {total.get('cv')}件 / 月次目標: {target_cv} / 目標比: {target_progress}
-- 応募CV（custom_cv_2）: {'N/A（BQ未分離）' if not use_obo else int(obo_cv_total)}件
-- 全体応募CPA: {fmt_num(total.get('obo_cpa')) if use_obo else 'N/A'}
-- 全体CTR: {fmt_pct(total.get('ctr'))}
-- 全体CVR: {fmt_pct(total.get('cvr'))}
+- 広告費: {fmt_num(total.get('spend'))} / 月間予算: {fmt_num(budget)} / 予算進捗: {budget_progress}
+- LINE登録CV: {total.get('cv')}件 / 月次目標: {target_cv}件 / 目標比: {target_progress}
+- 全体LINE登録CPA: {line_cpa_total}
+- 応募CV: {'N/A（BQ未分離）' if not use_obo else int(obo_cv_total)}件 / 全体応募CPA: {fmt_num(total.get('obo_cpa')) if use_obo else 'N/A'}
+- CTR: {fmt_pct(total.get('ctr'))} / CVR: {fmt_pct(total.get('cvr'))}
 
-## adset分類別KPI
-{chr(10).join(group_lines) if group_lines else '分類キーワード未設定（ADSET_GROUPSを設定してください）'}
+## adset分類別KPI（当週）
+{chr(10).join(group_lines) if group_lines else '※ ADSET_GROUPS未設定'}
 
-## CTA別KPI（月累積）
+## CTA別KPI（当週）
 {chr(10).join(cta_lines)}
 
-## 上位クリエイティブ（LINE登録CPA順）
+## クリエイティブ別KPI 上位15件（LINE登録CPA昇順）
 {chr(10).join(top_ads_lines)}
 
-## 事業背景
-- STは塾講師アルバイト・求人媒体サービス
-- 最重要KPI: LINE登録CV → 応募CV（ナーチャリング経由）
-- タイムラグ: 気軽に診断CTA → 応募まで中央値40日
-- 直近40日以内の応募CVは過小評価の可能性がある
-- CPA評価基準: 応募CPA ≤20,000円=良好 / ≤30,000円=要観察 / >30,000円=要見直し
+---
 
-## 出力形式
-以下の4セクションを見出し（★ 事象、★ 要因仮説、★ 示唆、★ ネクスト）付きで記述してください。
-仮説・推測には証拠強度（★★★データで直接示せる事実 / ★★間接的推測 / ★論理的推定）を付けてください。
+## 出力指示
+
+以下の4セクションを★見出し付きで記述すること。
+仮説・推測には必ず証拠強度（★★★データで直接示せる事実 / ★★複数データが一致する間接推測 / ★論理的推定）を明記する。
 
 ★ 事象
-（{week_label}の状況を具体的な数値を引用して記述。200字以内）
+- {week_label}の状況を具体的な数値（広告費・LINE_CV・CPA・CTR等）を3件以上引用して記述
+- 「何が起きたか」を事実ベースで。評価や推測は含めない
+- adset分類・CTA別・上位クリエイティブの特徴的な動きを必ず1つ以上言及
 
 ★ 要因仮説
-（なぜその数値になったか。証拠強度付き。3点以内）
+- 「なぜその数値になったか」を証拠強度付きで3点
+- 各点に必ずクリエイティブ名または訴求軸名（ad_nameや訴求の番号）と数値を引用
+- 良好クリエイティブと不振クリエイティブの対比で説明すること
 
 ★ 示唆
-▼WHO（データが示すターゲット層の状態・行動パターン）
-▼WHAT（今の層に刺さる提供価値・メッセージ軸）
-▼HOW（クリエイティブ方向性・CTA選択・予算配分の具体的方向性）
+▼WHO（このデータが示すターゲット層の状態・反応パターン。上位クリエイティブの共通点から読む）
+▼WHAT（今週効いたメッセージ軸・訴求の共通要素。命名規則の訴求軸を使って説明）
+▼HOW（次に打つべきクリエイティブ方向性・CTA選択・予算配分。具体的なクリエイティブ名・金額・割合で示す）
 
 ★ ネクスト
-（優先施策と理由。証拠強度付き。3点以内）
+- 優先施策3点を証拠強度付きで
+- 各施策は「誰が / 何を / いつまでに / 期待効果」の形式で記述
+- 月間予算・目標達成の観点から優先順位を付けること
+
+★ クリエイティブ要素
+以下の評価軸で上位5件（CPA良好順）と下位2件（CPA不振）を分析すること。
+動画を直接見ることはできないため、ad_name・scenario・CTR・CVRのデータから推定し、
+各推定には証拠強度（★★★/★★/★）を必ず付けること。
+
+評価軸:
+1. フック（冒頭1〜3秒）: ターゲットが「自分ごと」と感じられるか
+2. 字幕: テキスト量・視認性・キーワード配置の推定（ad_nameのコピー表現から判断）
+3. BGM: ジャンル・テンポの推定（訴求トーンから推定。タイパ系=テンポ速め / 安心系=穏やか等）
+4. 背景×内容の一致度: 訴求メッセージと想定される映像背景のマッチ度
+5. CTAハードル: 「診断」<「LP遷移」<「直応募」の順にハードルが高い。CVRと照合して評価
+
+出力形式（必ず表で）:
+| クリエイティブ名(略) | フック | 字幕推定 | BGM推定 | 背景一致度 | CTAハードル | 評価コメント |
+|---|---|---|---|---|---|---|
+
+表の後に「要改善ポイント（下位2件）」を箇条書きで追記。
 """
 
         response = model.generate_content(prompt)
@@ -498,10 +539,11 @@ if GEMINI_API_KEY:
             m = re.search(pattern, text, re.DOTALL)
             return m.group(1).strip() if m else '[取得失敗]'
 
-        gemini_texts['sesaku'] = extract_section(raw_text, '事象')
-        gemini_texts['youin']  = extract_section(raw_text, '要因仮説')
-        gemini_texts['shisa']  = extract_section(raw_text, '示唆')
-        gemini_texts['next']   = extract_section(raw_text, 'ネクスト')
+        gemini_texts['sesaku']   = extract_section(raw_text, '事象')
+        gemini_texts['youin']    = extract_section(raw_text, '要因仮説')
+        gemini_texts['shisa']    = extract_section(raw_text, '示唆')
+        gemini_texts['next']     = extract_section(raw_text, 'ネクスト')
+        gemini_texts['creative'] = extract_section(raw_text, 'クリエイティブ要素')
         print("  Gemini AIテキスト生成完了")
 
     except ImportError:
@@ -614,6 +656,11 @@ report += f"""
 ★ ネクスト
 
 {gemini_texts['next']}
+
+---
+★ クリエイティブ要素分析
+
+{gemini_texts['creative']}
 
 ================================================================
 """
@@ -754,12 +801,16 @@ if write_mode:
         ).execute()
         print(f"  ST_KPI報告 書き込み完了（{len(batch_data)}セル）")
 
-    # ---- KPI報告 のコピーシート: 4セクションテキスト ----
+    # ---- KPI報告 のコピーシート: 5セクションテキスト ----
     report_cells = [
-        {'range': f"'{COPY_SHEET}'!P30", 'values': [[gemini_texts['sesaku']]]},
-        {'range': f"'{COPY_SHEET}'!T30", 'values': [[gemini_texts['youin']]]},
-        {'range': f"'{COPY_SHEET}'!X30", 'values': [[gemini_texts['shisa']]]},
+        {'range': f"'{COPY_SHEET}'!P30",  'values': [[gemini_texts['sesaku']]]},
+        {'range': f"'{COPY_SHEET}'!T30",  'values': [[gemini_texts['youin']]]},
+        {'range': f"'{COPY_SHEET}'!X30",  'values': [[gemini_texts['shisa']]]},
         {'range': f"'{COPY_SHEET}'!AB30", 'values': [[gemini_texts['next']]]},
+        # ラベル行
+        {'range': f"'{COPY_SHEET}'!AF29", 'values': [['★クリエイティブ要素分析']]},
+        # Gemini生成テキスト
+        {'range': f"'{COPY_SHEET}'!AF30", 'values': [[gemini_texts['creative']]]},
     ]
     svc.spreadsheets().values().batchUpdate(
         spreadsheetId=KPI_SHEET_ID,

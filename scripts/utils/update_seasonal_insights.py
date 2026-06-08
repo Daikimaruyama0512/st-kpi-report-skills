@@ -6,7 +6,7 @@ ST Meta広告の直近90日BQデータ + 季節変数カレンダーを元に
 knowledge/creative_trend_insights.md を自動更新し git push する。
 
 必要: pip install google-cloud-bigquery db-dtypes pyarrow pandas google-auth google-auth-httplib2
-crontab: 0 0 * * 1 cd /Users/119322/claude-code-template_af && /usr/bin/python3 scripts/update_seasonal_insights.py >> /tmp/st_weekly_update.log 2>&1
+crontab: 0 0 * * 1 cd /Users/119322/claude-code-template_af && /usr/bin/python3 scripts/utils/update_seasonal_insights.py >> /tmp/st_weekly_update.log 2>&1
 """
 
 import sys
@@ -28,9 +28,9 @@ from google.cloud import bigquery
 # ===== 定数 =====
 REPO_DIR      = "/Users/119322/claude-code-template_af"
 TOKEN_FILE    = r"/Users/119322/claude-code-template_af/secrets/token.json"
-CACHE_FILE    = r"/Users/119322/claude-code-template_af/scripts/weekly_bq_cache.json"
-CALENDAR_FILE = "/Users/119322/claude-code-template_af/knowledge/Prerequisites/ST_05_大学生カレンダー.md"
-OUTPUT_FILE   = "/Users/119322/claude-code-template_af/knowledge/creative_trend_insights.md"
+CACHE_FILE    = r"/Users/119322/claude-code-template_af/scripts/data/weekly_bq_cache.json"
+CALENDAR_FILE = "/Users/119322/claude-code-template_af/knowledge/target/Prerequisites/ST_05_大学生カレンダー.md"
+OUTPUT_FILE   = "/Users/119322/claude-code-template_af/knowledge/creative/creative_trend_insights.md"
 PROJECT_ID    = "bigquery-jukust"
 SCOPES = [
     'https://www.googleapis.com/auth/bigquery',

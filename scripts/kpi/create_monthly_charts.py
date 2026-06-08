@@ -5,7 +5,8 @@
 # 必要: pip install google-cloud-bigquery db-dtypes pyarrow google-auth google-api-python-client
 #
 # 使い方:
-#   python3 scripts/create_monthly_charts.py
+#   初回作成:  python3 scripts/create_monthly_charts.py
+#   スタイル更新: python3 scripts/create_monthly_charts.py --update
 
 import sys
 import io
@@ -52,6 +53,35 @@ KPI_ROWS = [
     {'name': 'CPM',        'row': ROW_CPM},
 ]
 
+# ── チャートスタイル定数 ──────────────────────────
+CHART_WIDTH_PX  = 520   # 450 → 520
+CHART_HEIGHT_PX = 320   # 280 → 320
+
+# 8KPI の線色（Google Sheets API rgbColor 形式: red/green/blue 各 0.0-1.0）
+KPI_COLORS = [
+    {"red": 0.024, "green": 0.780, "blue": 0.333},  # LINE登録CV: LINE緑
+    {"red": 0.000, "green": 0.537, "blue": 0.482},  # 応募CV:     青緑
+    {"red": 0.957, "green": 0.318, "blue": 0.118},  # 応募CPA:    オレンジ赤
+    {"red": 0.827, "green": 0.184, "blue": 0.184},  # COST:       赤
+    {"red": 0.984, "green": 0.549, "blue": 0.000},  # CPF:        橙
+    {"red": 0.482, "green": 0.122, "blue": 0.635},  # CTR(%):     紫
+    {"red": 0.086, "green": 0.396, "blue": 0.753},  # CVR(%):     青
+    {"red": 0.329, "green": 0.431, "blue": 0.478},  # CPM:        グレー青
+]
+
+# Y軸 NumberFormat パターン（KPI別）
+# CTR/CVR: BQで *100 して格納しているため "0.00%" は不可（0.01倍される）→ "#,##0.00" + タイトルで単位表示
+KPI_AXIS_FORMAT = [
+    "#,##0",      # LINE登録CV（件）
+    "#,##0",      # 応募CV（件）
+    "¥#,##0",     # 応募CPA
+    "¥#,##0",     # COST
+    "¥#,##0",     # CPF
+    "#,##0.00",   # CTR(%) ← 値は整数%（例: 1.23）
+    "#,##0.00",   # CVR(%) ← 同上
+    "¥#,##0",     # CPM
+]
+
 # チャート配置（4列×2行レイアウト, O29起点）
 # O = 14 (0-indexed),  row29 = 28 (0-indexed)
 # 各チャートを9列・15行間隔で配置
@@ -66,8 +96,6 @@ CHART_ANCHORS = [
     (32, 43),   # CVR:        AG44
     (41, 43),   # CPM:        AP44
 ]
-CHART_WIDTH_PX  = 450
-CHART_HEIGHT_PX = 280
 
 SCOPES = [
     'https://www.googleapis.com/auth/bigquery',
@@ -152,23 +180,58 @@ def write_monthly_data(svc, monthly_data):
     print(f"  書き込み完了: {start_col}2:{end_col}10 ({len(monthly_data)}ヶ月: {', '.join(months)})")
 
 
+def get_existing_chart_ids(svc, sheet_id):
+    """対象シートの既存チャートID一覧を返す"""
+    sheet_meta = svc.spreadsheets().get(spreadsheetId=SPREADSHEET_ID).execute()
+    for s in sheet_meta['sheets']:
+        if s['properties']['sheetId'] == sheet_id:
+            charts = s.get('charts', [])
+            return [c['chartId'] for c in charts]
+    return []
+
+
+def delete_charts(svc, chart_ids):
+    """指定chartIdのチャートを一括削除"""
+    if not chart_ids:
+        print("  削除対象チャートなし")
+        return
+    requests = [
+        {"deleteEmbeddedObject": {"objectId": cid}}
+        for cid in chart_ids
+    ]
+    svc.spreadsheets().batchUpdate(
+        spreadsheetId=SPREADSHEET_ID,
+        body={"requests": requests}
+    ).execute()
+    print(f"  {len(chart_ids)}本のチャートを削除しました")
+
+
 def create_charts(svc, sheet_id, num_months):
     """8本の月次折れ線グラフを作成"""
     requests = []
     for i, kpi in enumerate(KPI_ROWS):
         col_idx, row_idx = CHART_ANCHORS[i]
+        color  = KPI_COLORS[i]
+        fmt    = KPI_AXIS_FORMAT[i]
         requests.append({
             "addChart": {
                 "chart": {
                     "spec": {
                         "title": f"{kpi['name']} 月次推移",
-                        "titleTextFormat": {"fontSize": 11, "bold": True},
+                        "titleTextFormat": {"fontSize": 12, "bold": True},
                         "basicChart": {
                             "chartType": "COMBO",
                             "legendPosition": "NO_LEGEND",
+                            "lineSmoothing": True,
                             "axis": [
                                 {"position": "BOTTOM_AXIS"},
-                                {"position": "LEFT_AXIS", "title": kpi['name']},
+                                {
+                                    "position": "LEFT_AXIS",
+                                    "title": kpi['name'],
+                                    "format": {
+                                        "pattern": fmt
+                                    }
+                                },
                             ],
                             "domains": [
                                 {
@@ -176,11 +239,11 @@ def create_charts(svc, sheet_id, num_months):
                                         "sourceRange": {
                                             "sources": [
                                                 {
-                                                    "sheetId":         sheet_id,
-                                                    "startRowIndex":   ROW_HEADER,
-                                                    "endRowIndex":     ROW_HEADER + 1,
+                                                    "sheetId":          sheet_id,
+                                                    "startRowIndex":    ROW_HEADER,
+                                                    "endRowIndex":      ROW_HEADER + 1,
                                                     "startColumnIndex": DATA_COL_START,
-                                                    "endColumnIndex":  DATA_COL_START + num_months,
+                                                    "endColumnIndex":   DATA_COL_START + num_months,
                                                 }
                                             ]
                                         }
@@ -193,17 +256,36 @@ def create_charts(svc, sheet_id, num_months):
                                         "sourceRange": {
                                             "sources": [
                                                 {
-                                                    "sheetId":         sheet_id,
-                                                    "startRowIndex":   kpi['row'],
-                                                    "endRowIndex":     kpi['row'] + 1,
+                                                    "sheetId":          sheet_id,
+                                                    "startRowIndex":    kpi['row'],
+                                                    "endRowIndex":      kpi['row'] + 1,
                                                     "startColumnIndex": DATA_COL_START,
-                                                    "endColumnIndex":  DATA_COL_START + num_months,
+                                                    "endColumnIndex":   DATA_COL_START + num_months,
                                                 }
                                             ]
                                         }
                                     },
                                     "targetAxis": "LEFT_AXIS",
-                                    "type": "LINE"
+                                    "type": "LINE",
+                                    "colorStyle": {
+                                        "rgbColor": color
+                                    },
+                                    "lineStyle": {
+                                        "width": 3,
+                                        "type": "SOLID"
+                                    },
+                                    "pointStyle": {
+                                        "shape": "CIRCLE",
+                                        "size": 8
+                                    },
+                                    "dataLabel": {
+                                        "type": "DATA",
+                                        "placement": "ABOVE",
+                                        "textFormat": {
+                                            "fontSize": 9,
+                                            "bold": False
+                                        }
+                                    }
                                 }
                             ],
                             "headerCount": 0
@@ -234,7 +316,10 @@ def create_charts(svc, sheet_id, num_months):
 
 
 def main():
+    update_mode = '--update' in sys.argv
+
     print("=== 月次KPIチャート作成スクリプト ===")
+    print(f"  モード: {'スタイル更新 (--update)' if update_mode else '初回作成'}")
     print(f"  シート: {SPREADSHEET_ID}")
     print(f"  タブ: {KPI_COPY_TAB}")
 
@@ -245,7 +330,6 @@ def main():
         creds.refresh(Request())
     print("  OK")
 
-    bq_client  = bigquery.Client(project=PROJECT_ID, credentials=creds)
     sheets_svc = build('sheets', 'v4', credentials=creds)
 
     # タブのシートID取得
@@ -261,27 +345,48 @@ def main():
         sys.exit(1)
     print(f"  シートID: {kpi_copy_sheet_id}")
 
-    # BQデータ取得
-    print("\n=== BQ月次データ取得（直近6ヶ月）===")
-    monthly_data = fetch_monthly_data(bq_client)
-    if not monthly_data:
-        print("[エラー] BQからデータが取得できませんでした")
-        sys.exit(1)
-    for d in monthly_data:
-        print(f"  {d['month_label']}: LINE_CV={d['line_cv']}, spend={int(d['spend']):,}, CPF={d['cpf'] or 'N/A'}")
+    if update_mode:
+        # --update: 既存チャートを削除して新スタイルで再作成
+        print("\n=== 既存チャート削除 ===")
+        existing_ids = get_existing_chart_ids(sheets_svc, kpi_copy_sheet_id)
+        print(f"  発見したチャート: {len(existing_ids)}本")
+        delete_charts(sheets_svc, existing_ids)
 
-    # データ書き込み
-    print("\n=== シートへデータ書き込み ===")
-    write_monthly_data(sheets_svc, monthly_data)
+        # BQクエリはスキップ（データはシートに残っているため）
+        num_months = NUM_MONTHS
+    else:
+        # 通常モード: 既存チャートがある場合は警告してスキップ
+        existing_ids = get_existing_chart_ids(sheets_svc, kpi_copy_sheet_id)
+        if existing_ids:
+            print(f"\n[警告] チャートが既に {len(existing_ids)}本 存在します。")
+            print("  スタイルを更新したい場合は --update フラグを使ってください:")
+            print("  python3 scripts/create_monthly_charts.py --update")
+            sys.exit(0)
+
+        # BQデータ取得
+        print("\n=== BQ月次データ取得（直近6ヶ月）===")
+        bq_client = bigquery.Client(project=PROJECT_ID, credentials=creds)
+        monthly_data = fetch_monthly_data(bq_client)
+        if not monthly_data:
+            print("[エラー] BQからデータが取得できませんでした")
+            sys.exit(1)
+        for d in monthly_data:
+            print(f"  {d['month_label']}: LINE_CV={d['line_cv']}, spend={int(d['spend']):,}, CPF={d['cpf'] or 'N/A'}")
+
+        # データ書き込み
+        print("\n=== シートへデータ書き込み ===")
+        write_monthly_data(sheets_svc, monthly_data)
+        num_months = len(monthly_data)
 
     # チャート作成
     print("\n=== チャート作成（8本）===")
-    create_charts(sheets_svc, kpi_copy_sheet_id, len(monthly_data))
+    create_charts(sheets_svc, kpi_copy_sheet_id, num_months)
 
     print("\n完了。")
     print(f"  URL: https://docs.google.com/spreadsheets/d/{SPREADSHEET_ID}/edit#gid={kpi_copy_sheet_id}")
-    print("\n次回以降は以下コマンドで月次データが自動更新されます:")
-    print("  python3 scripts/kpi_report_st.py 2026/MM/DD-2026/MM/DD --write")
+    if not update_mode:
+        print("\n次回以降は以下コマンドで月次データが自動更新されます:")
+        print("  python3 scripts/kpi_report_st.py 2026/MM/DD-2026/MM/DD --write")
 
 
 if __name__ == '__main__':

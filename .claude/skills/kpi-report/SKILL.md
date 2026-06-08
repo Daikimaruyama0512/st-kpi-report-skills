@@ -20,13 +20,13 @@ description: 「KPI報告して」「週次報告」「月次レポート」「K
 
 ```
 STEP 1: adset名一覧確認（初回のみ）
-        python3 scripts/kpi_report_st.py --list-adsets
+        python3 scripts/kpi/kpi_report_st.py --list-adsets
 
 STEP 2: ADSET_GROUPS のキーワードを設定してからレポート実行
-        python3 scripts/kpi_report_st.py 2026/05/01-2026/05/07
+        python3 scripts/kpi/kpi_report_st.py 2026/05/01-2026/05/07
 
 STEP 3: コンソール出力を確認後、スプシに書き込む
-        python3 scripts/kpi_report_st.py 2026/05/01-2026/05/07 --write
+        python3 scripts/kpi/kpi_report_st.py 2026/05/01-2026/05/07 --write
 ```
 
 **スクリプト仕様（v3）:**
@@ -43,7 +43,7 @@ STEP 3: コンソール出力を確認後、スプシに書き込む
 ### 初回のみ: adset名確認
 
 ```bash
-python3 scripts/kpi_report_st.py --list-adsets
+python3 scripts/kpi/kpi_report_st.py --list-adsets
 ```
 
 出力される adset_name 一覧を確認し、スクリプト冒頭の `ADSET_GROUPS` にキーワードを設定する:
@@ -68,17 +68,17 @@ GEMINI_API_KEY=AIza...
 
 | ファイルパス | 読み取る情報 |
 |---|---|
-| `knowledge/business-overview.md` | 事業KPI・タイムラグ・評価サイクルの前提 |
-| `knowledge/bigquery-schema.md` | BigQueryパターン |
-| `knowledge/meta-ads-naming.md` | 広告命名規則の読み方 |
+| `knowledge/business/business-overview.md` | 事業KPI・タイムラグ・評価サイクルの前提 |
+| `knowledge/data/bigquery-schema.md` | BigQueryパターン |
+| `knowledge/creative/meta-ads-naming.md` | 広告命名規則の読み方 |
 | `.claude/rules/meta-ads-analysis.md` | 分析ルール・証拠強度・レポート形式 |
-| `knowledge/fy26_meta_ads_overview.md` | 当期ST戦略・KPI・予算方針 |
-| `knowledge/Prerequisites/ST_05_大学生カレンダー.md` | 心理フェーズ・需要スコア |
-| `knowledge/Prerequisites/ST_07_KPI評価ルール.md` | 応募CPA判定基準 |
-| `knowledge/creative_trend_insights.md` | CTA・訴求軸の成果傾向 |
-| `knowledge/customer_info_st.md` | STターゲット属性・時期別心理フェーズ |
-| `knowledge/who_what_how.md` | WHO/WHAT/HOW構造定義 |
-| `knowledge/ST_Meta広告集計さん_KPI報告.md` | 出力フォーマット見本 |
+| `knowledge/business/fy26_meta_ads_overview.md` | 当期ST戦略・KPI・予算方針 |
+| `knowledge/target/Prerequisites/ST_05_大学生カレンダー.md` | 心理フェーズ・需要スコア |
+| `knowledge/target/Prerequisites/ST_07_KPI評価ルール.md` | 応募CPA判定基準 |
+| `knowledge/creative/creative_trend_insights.md` | CTA・訴求軸の成果傾向 |
+| `knowledge/target/customer_info_st.md` | STターゲット属性・時期別心理フェーズ |
+| `knowledge/target/who_what_how.md` | WHO/WHAT/HOW構造定義 |
+| `knowledge/data/ST_Meta広告集計さん_KPI報告.md` | 出力フォーマット見本 |
 
 ---
 
@@ -86,10 +86,10 @@ GEMINI_API_KEY=AIza...
 
 ```bash
 # レポート生成（コンソール出力）
-python3 scripts/kpi_report_st.py 2026/05/01-2026/05/07
+python3 scripts/kpi/kpi_report_st.py 2026/05/01-2026/05/07
 
 # スプシにも書き込む
-python3 scripts/kpi_report_st.py 2026/05/01-2026/05/07 --write
+python3 scripts/kpi/kpi_report_st.py 2026/05/01-2026/05/07 --write
 ```
 
 ### スクリプトの出力内容
@@ -147,7 +147,7 @@ SPREADSHEET_ID: 1xXeCl4Xbkxz-w_jT49TmA3-voruL2cTbF1f308hZ5vQ
 | AB30 | ★ネクスト（Gemini生成） |
 | AL2:AR10 | 月次KPIデータ（直近6ヶ月 / チャート自動更新用） |
 
-> **月次チャートについて**: `create_monthly_charts.py` で作成した8本の折れ線グラフ（LINE登録CV / 応募CV / 応募CPA / COST / CPF / CTR / CVR / CPM）の元データが AL2:AR10 に書き込まれ、チャートが自動更新される。初回のみ `python3 scripts/create_monthly_charts.py` の実行が必要（作成済み）。
+> **月次チャートについて**: `create_monthly_charts.py` で作成した8本の折れ線グラフ（LINE登録CV / 応募CV / 応募CPA / COST / CPF / CTR / CVR / CPM）の元データが AL2:AR10 に書き込まれ、チャートが自動更新される。初回のみ `python3 scripts/kpi/create_monthly_charts.py` の実行が必要（作成済み）。
 
 ---
 
@@ -170,13 +170,13 @@ SPREADSHEET_ID: 1xXeCl4Xbkxz-w_jT49TmA3-voruL2cTbF1f308hZ5vQ
 
 | ファイルパス | 読み取る情報 |
 |---|---|
-| `knowledge/business-overview.md` | 事業KPI・タイムラグ・評価サイクルの前提 |
-| `knowledge/bigquery-schema.md` | ビュー名・カラム定義・クエリパターン |
-| `knowledge/meta-ads-naming.md` | 命名規則の読み方（訴求軸・動画の型） |
+| `knowledge/business/business-overview.md` | 事業KPI・タイムラグ・評価サイクルの前提 |
+| `knowledge/data/bigquery-schema.md` | ビュー名・カラム定義・クエリパターン |
+| `knowledge/creative/meta-ads-naming.md` | 命名規則の読み方（訴求軸・動画の型） |
 | `.claude/rules/meta-ads-analysis.md` | 分析ルール・レポート形式 |
-| `knowledge/fy26_meta_ads_overview.md` | 当期のKPI・予算・戦略方針 |
-| `knowledge/fy25_meta_ads_strategy.md` | 過去の勝ちパターン・失敗パターン |
-| `knowledge/video_analysis_elements.md` | 動画クリエイティブ評価の6指標（フック・ベネフィット・テンポ・T&M・CTA・季節変数） |
+| `knowledge/business/fy26_meta_ads_overview.md` | 当期のKPI・予算・戦略方針 |
+| `knowledge/business/fy25_meta_ads_strategy.md` | 過去の勝ちパターン・失敗パターン |
+| `knowledge/creative/video_analysis_elements.md` | 動画クリエイティブ評価の6指標（フック・ベネフィット・テンポ・T&M・CTA・季節変数） |
 
 ---
 
@@ -225,7 +225,7 @@ ORDER BY cpa ASC
 ## STEP 3（CA）: KPI・クリエイティブ評価
 
 1. **CPA ランク付け**: spend ≥ 1万円の広告を CPA 昇順でランク付け
-2. **命名規則解析**: `ad_name` を `knowledge/meta-ads-naming.md` に照らし、訴求軸・動画の型を分類（自己解釈禁止）
+2. **命名規則解析**: `ad_name` を `knowledge/creative/meta-ads-naming.md` に照らし、訴求軸・動画の型を分類（自己解釈禁止）
 3. **デモグラ確認**: デモグラビューで 25-34歳 の CVR をベースラインと比較
 4. **タイムラグ考慮**: 直近40日以内の CV 数は過小評価として扱う
 
@@ -233,7 +233,7 @@ ORDER BY cpa ASC
 
 ## STEP 4（CA）: 動画クリエイティブ評価（6指標チェック）
 
-`knowledge/video_analysis_elements.md` の6指標に沿って上位・下位クリエイティブを評価する。
+`knowledge/creative/video_analysis_elements.md` の6指標に沿って上位・下位クリエイティブを評価する。
 
 | 指標 | 確認ポイント |
 |---|---|
