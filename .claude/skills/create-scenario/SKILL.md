@@ -37,13 +37,15 @@ description: 「シナリオ作って」「シナリオ修正して」「〇月�
 | `knowledge/creative/sns_ads_scenario_master.md` | シナリオのマスタ一覧・命名規則 |
 | `knowledge/target/Prerequisites/ST_03_大学生インサイト.md` | 登録動機TOP5・塾ブランド偏差値10軸・ペインポイント詳細 |
 | `knowledge/target/Prerequisites/ST_02_競合分析.md` | 競合動画シナリオパターン・差別化軸（UGC/Before-After型参考） |
-| `knowledge/target/Prerequisites/ST_05_大学生カレンダー.md` | 全12ヶ月の心理フェーズ・需要スコア・訴求テーマ・CTA時期推奨 |
 | `knowledge/data/knowledge_meta_ads.md` | 運用ルール・シナリオ構成ルール・編集仕様 |
 | `knowledge/target/who_what_how.md` | Who/What/How・ペルソナ詳細・提供価値 |
 | `knowledge/creative/FY25_STSNS広告PDCA管理_LP.md` | LPフレームワーク整理（PASONA/QUEST構成・CTA別訴求軸） |
-| `knowledge/data/ST_Meta広告集計さん_KPI報告.md` | 直近KPI実績・CTA別応募CPA・施策進捗・ネクストアクション |
 | `knowledge/creative/creative_trend_insights.md` | **BigQuery実績データから導出したCTA・訴求軸・字幕文字数・テンポの成果傾向（最新分析）** ← kpi-reportスキルのSTEP 3b で更新される |
 | `knowledge/creative/monthly_seasonal_variables.md` | **月別季節変数マスタ（12ヶ月のセグメント割合・フックアイデア・推奨CTA・NG表現）← STEP 3で対象月のみ参照** |
+
+> **削除済みファイル（参照不要）**
+> - `ST_05_大学生カレンダー.md` → `monthly_seasonal_variables.md` に統合済み。月別心理フェーズ・需要スコアは後者を参照
+> - `ST_Meta広告集計さん_KPI報告.md` → `creative_trend_insights.md` に含まれる。最新KPI実績は後者を参照
 
 ファイルが存在しない場合はユーザーに確認してから進む。
 
