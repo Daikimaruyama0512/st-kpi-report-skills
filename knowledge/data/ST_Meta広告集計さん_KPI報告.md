@@ -5,8 +5,8 @@
 | 用途 | SPREADSHEET_ID | 備考 |
 |---|---|---|
 | 集計さん（ローデータ） | `1QWJsnc-JKn-1fcjZMUygsccZXuygt4e9wY71bnxuSyQ` | **kpi-reportは読み込まない**（重いため分離済み） |
-| KPI報告（旧） | `1ungNub8cmJU0QSzYs2C3S1BcWmHz9H75zBs9aoFkhj8` | テキスト書き込み先（KPI報告 のコピー タブ） |
-| **ST_KPI報告（メイン）** | **`1xXeCl4Xbkxz-w_jT49TmA3-voruL2cTbF1f308hZ5vQ`** | 数値書き込み先 + 入力タブ（予算・目標） |
+| KPI報告（旧） | `1ungNub8cmJU0QSzYs2C3S1BcWmHz9H75zBs9aoFkhj8` | CR別（BQ）タブのみ。「KPI報告」タブはあるが「KPI報告 のコピー」タブはこちらには存在しない（2026-09-21実測確認） |
+| **ST_KPI報告（メイン）** | **`1xXeCl4Xbkxz-w_jT49TmA3-voruL2cTbF1f308hZ5vQ`** | 数値書き込み先 + 入力タブ（予算・目標）。「KPI報告 のコピー」タブ（事象・要因仮説・示唆・ネクストのテキスト書き込み先、セルはQ30/U30/Y30/AC30）もこちらのスプシ内（2026-09-21実測確認） |
 
 ### kpi-report スキルのデータフロー（v2: 集計さん分離後）
 

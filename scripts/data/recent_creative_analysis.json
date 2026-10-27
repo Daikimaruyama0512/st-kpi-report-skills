@@ -1,206 +1,206 @@
 {
   "summary": {
-    "date_from": "0.11522554103927124",
-    "total_spend": 6326212.0,
-    "total_cv": 251.0
+    "date_from": "0.11758159985005653",
+    "total_spend": 1813423.0,
+    "total_cv": 57.0
   },
   "cta": [
     {
-      "cta": "ペルソナLP",
-      "cpa": 16808,
-      "spend": 991672.0,
-      "cv": 59.0,
-      "count": 10
+      "cta": "3分診断",
+      "cpa": 15720,
+      "spend": 110044.0,
+      "cv": 7.0,
+      "count": 2
     },
     {
       "cta": "ブランド診断",
-      "cpa": 17328,
-      "spend": 987743.0,
-      "cv": 57.0,
-      "count": 11
-    },
-    {
-      "cta": "気軽に診断",
-      "cpa": 21659,
-      "spend": 649770.0,
-      "cv": 30.0,
+      "cpa": 20562,
+      "spend": 596298.0,
+      "cv": 29.0,
       "count": 10
     },
     {
       "cta": "その他/不明",
-      "cpa": 34010,
-      "spend": 3605117.0,
-      "cv": 106.0,
-      "count": 7
+      "cpa": 50107,
+      "spend": 651402.0,
+      "cv": 13.0,
+      "count": 12
+    },
+    {
+      "cta": "気軽に診断",
+      "cpa": 58642,
+      "spend": 410496.0,
+      "cv": 7.0,
+      "count": 4
     }
   ],
   "appeal": [
     {
-      "appeal": "推定:タイパ(旧)",
-      "cpa": 15158,
-      "spend": 1061107.0,
-      "cv": 70.0,
-      "count": 15
+      "appeal": "推定:単願(旧)",
+      "cpa": 19009,
+      "spend": 494252.0,
+      "cv": 26.0,
+      "count": 7
     },
     {
       "appeal": "推定:併願(旧)",
-      "cpa": 16110,
-      "spend": 177213.0,
-      "cv": 11.0,
-      "count": 2
-    },
-    {
-      "appeal": "推定:単願(旧)",
-      "cpa": 21397,
-      "spend": 1390865.0,
-      "cv": 65.0,
-      "count": 14
+      "cpa": 31127,
+      "spend": 435791.0,
+      "cv": 14.0,
+      "count": 3
     },
     {
       "appeal": "旧命名/不明",
-      "cpa": 34010,
-      "spend": 3605117.0,
-      "cv": 106.0,
-      "count": 7
+      "cpa": 50107,
+      "spend": 651402.0,
+      "cv": 13.0,
+      "count": 12
+    },
+    {
+      "appeal": "推定:タイパ(旧)",
+      "cpa": 62265,
+      "spend": 186795.0,
+      "cv": 3.0,
+      "count": 6
     }
   ],
   "vtype": [
     {
       "type": "旧命名/不明",
-      "cpa": 24739,
-      "spend": 6234302.0,
-      "cv": 252.0,
-      "count": 38
+      "cpa": 31575,
+      "spend": 1768240.0,
+      "cv": 56.0,
+      "count": 28
     }
   ],
   "top10": [
     {
-      "ad_name": "App_マンネリ解消_LP",
+      "ad_name": "App_新しいこと_LP",
       "scenario": null,
-      "spend": 14154.0,
+      "spend": 29104.0,
       "cv": 0.0,
       "cpa": 0,
       "cvr": 0,
-      "cpm": 1757.0,
+      "cpm": 1761.0,
       "scenario_len": 0,
       "cta": "その他/不明",
       "appeal": "旧命名/不明",
       "video_type": "旧命名/不明"
     },
     {
-      "ad_name": "01タイパ_時給逆算_ブランド診断_新規",
+      "ad_name": "App_静止画1_LP",
       "scenario": null,
-      "spend": 11824.0,
+      "spend": 50812.0,
       "cv": 0.0,
       "cpa": 0,
       "cvr": 0,
-      "cpm": 760.0,
-      "scenario_len": 0,
-      "cta": "ブランド診断",
-      "appeal": "推定:タイパ(旧)",
-      "video_type": "旧命名/不明"
-    },
-    {
-      "ad_name": "App_生活圏内で_LP",
-      "scenario": null,
-      "spend": 29471.0,
-      "cv": 0.0,
-      "cpa": 0,
-      "cvr": 0,
-      "cpm": 1038.0,
+      "cpm": 1277.0,
       "scenario_len": 0,
       "cta": "その他/不明",
       "appeal": "旧命名/不明",
       "video_type": "旧命名/不明"
     },
     {
-      "ad_name": "02単願_GW明けの通学電車で診断_気軽に診断_新規",
+      "ad_name": "App_静止画2_LP",
       "scenario": null,
-      "spend": 13529.0,
+      "spend": 22372.0,
       "cv": 0.0,
       "cpa": 0,
       "cvr": 0,
-      "cpm": 722.0,
+      "cpm": 2147.0,
+      "scenario_len": 0,
+      "cta": "その他/不明",
+      "appeal": "旧命名/不明",
+      "video_type": "旧命名/不明"
+    },
+    {
+      "ad_name": "App_来月の請求怖い_LP",
+      "scenario": null,
+      "spend": 40554.0,
+      "cv": 0.0,
+      "cpa": 0,
+      "cvr": 0,
+      "cpm": 2278.0,
+      "scenario_len": 0,
+      "cta": "その他/不明",
+      "appeal": "旧命名/不明",
+      "video_type": "旧命名/不明"
+    },
+    {
+      "ad_name": "02単願_行動ハードル極小_気軽に診断_横展開",
+      "scenario": null,
+      "spend": 50632.0,
+      "cv": 0.0,
+      "cpa": 0,
+      "cvr": 0,
+      "cpm": 876.0,
       "scenario_len": 0,
       "cta": "気軽に診断",
       "appeal": "推定:単願(旧)",
       "video_type": "旧命名/不明"
     },
     {
-      "ad_name": "01タイパ_5月の隠れ急募_ペルソナLP_新規",
+      "ad_name": "01タイパ_テスト期間の悩み_ブランド診断_新規",
       "scenario": null,
-      "spend": 11480.0,
-      "cv": 2.0,
-      "cpa": 5740.0,
-      "cvr": 9.52,
-      "cpm": 1128.0,
+      "spend": 15421.0,
+      "cv": 0.0,
+      "cpa": 0,
+      "cvr": 0,
+      "cpm": 902.0,
       "scenario_len": 0,
-      "cta": "ペルソナLP",
+      "cta": "3分診断",
       "appeal": "推定:タイパ(旧)",
       "video_type": "旧命名/不明"
     },
     {
-      "ad_name": "03併願_GWは診断_気軽に診断_横展開",
+      "ad_name": "01タイパ_夏休み出費ピンチ_ブランド診断_横展開",
       "scenario": null,
-      "spend": 33999.0,
-      "cv": 5.0,
-      "cpa": 6799.8,
-      "cvr": 3.73,
-      "cpm": 568.0,
+      "spend": 39978.0,
+      "cv": 0.0,
+      "cpa": 0,
+      "cvr": 0,
+      "cpm": 1124.0,
+      "scenario_len": 0,
+      "cta": "ブランド診断",
+      "appeal": "推定:タイパ(旧)",
+      "video_type": "旧命名/不明"
+    },
+    {
+      "ad_name": "03併願_テスト勉強の合間に診断-7月_気軽に診断_横展開",
+      "scenario": null,
+      "spend": 50601.0,
+      "cv": 0.0,
+      "cpa": 0,
+      "cvr": 0,
+      "cpm": 633.0,
       "scenario_len": 0,
       "cta": "気軽に診断",
       "appeal": "推定:併願(旧)",
       "video_type": "旧命名/不明"
     },
     {
-      "ad_name": "01タイパ_GW明けから働きたいV2_気軽に診断_横展開",
+      "ad_name": "01タイパ_夏休み終盤のゴロゴロ_気軽に診断_横展開",
       "scenario": null,
-      "spend": 59376.0,
-      "cv": 8.0,
-      "cpa": 7422.0,
-      "cvr": 5.1,
-      "cpm": 694.0,
+      "spend": 18696.0,
+      "cv": 0.0,
+      "cpa": 0,
+      "cvr": 0,
+      "cpm": 906.0,
       "scenario_len": 0,
       "cta": "気軽に診断",
       "appeal": "推定:タイパ(旧)",
       "video_type": "旧命名/不明"
     },
     {
-      "ad_name": "02単願_学力が不安でも大丈夫_ブランド診断_新規",
+      "ad_name": "01タイパ_夏期講習の先行確保_ブランド診断_新規_B",
       "scenario": null,
-      "spend": 47738.0,
-      "cv": 6.0,
-      "cpa": 7956.333333333333,
-      "cvr": 4.96,
-      "cpm": 695.0,
+      "spend": 10112.0,
+      "cv": 0.0,
+      "cpa": 0,
+      "cvr": 0,
+      "cpm": 981.0,
       "scenario_len": 0,
       "cta": "ブランド診断",
-      "appeal": "推定:単願(旧)",
-      "video_type": "旧命名/不明"
-    },
-    {
-      "ad_name": "01タイパ_履修確定後の空きコマ_ブランド診断_新規",
-      "scenario": null,
-      "spend": 17574.0,
-      "cv": 2.0,
-      "cpa": 8787.0,
-      "cvr": 3.77,
-      "cpm": 800.0,
-      "scenario_len": 0,
-      "cta": "ブランド診断",
-      "appeal": "推定:タイパ(旧)",
-      "video_type": "旧命名/不明"
-    },
-    {
-      "ad_name": "01タイパ_GW明けから働きたい_気軽に診断_横展開",
-      "scenario": null,
-      "spend": 17586.0,
-      "cv": 2.0,
-      "cpa": 8793.0,
-      "cvr": 4.55,
-      "cpm": 781.0,
-      "scenario_len": 0,
-      "cta": "気軽に診断",
       "appeal": "推定:タイパ(旧)",
       "video_type": "旧命名/不明"
     }

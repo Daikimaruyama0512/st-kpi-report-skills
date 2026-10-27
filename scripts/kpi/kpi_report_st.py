@@ -31,9 +31,10 @@ from google.cloud import bigquery
 # adset_name に含まれるキーワードで分類する
 # --list-adsets で実際のadset名を確認してからキーワードを設定すること
 ADSET_GROUPS = {
-    '顕在層': ['顕在'],
-    '潜在層': ['潜在'],
-    # 例: 'LINE配信': ['LINE'],
+    '顕在層(LINE)': ['顕在'],
+    '潜在層(LINE)': ['潜在'],
+    'App(LP)':     ['App_'],
+    '手動運用':     ['手動'],
 }
 
 # 応募CPA評価閾値（custom_cv_2 = 応募CV）
@@ -66,7 +67,7 @@ NEW_KPI_TAB        = 'KPI報告'
 # 認証設定
 # ============================================================
 _HERE      = os.path.dirname(os.path.abspath(__file__))
-_ROOT      = os.path.dirname(_HERE)  # プロジェクトルート
+_ROOT      = os.path.dirname(os.path.dirname(_HERE))  # プロジェクトルート（scripts/kpi/ → scripts/ → root）
 TOKEN_FILE = os.path.join(_ROOT, "secrets", "token.json")
 ENV_FILE   = os.path.join(_ROOT, ".env")
 PROJECT_ID = "bigquery-jukust"
@@ -445,6 +446,16 @@ if GEMINI_API_KEY:
                 f" / 応募CPA={fmt_num(r.get('obo_cpa')) if use_obo else 'N/A'}"
             )
 
+        # 上位=CV≥5（最大5件）、下位=CV≤1でspend上位（最大2件）。CV0を「上位」に入れない（母数不足の機械抽出を防ぐ）
+        def _ad_line(r):
+            return (
+                f"  - 「{str(r['ad_name'])[:45]}」 spend={fmt_num(r['spend'])} / LINE_CV={r['cv']}"
+                f" / LINE_CPA={fmt_num(r.get('cpa'))} / CTR={fmt_pct(r.get('ctr'))} / CVR={fmt_pct(r.get('cvr'))}"
+            )
+        top_elig_lines = [_ad_line(r) for r in [x for x in ad_rows if (x.get('cv') or 0) >= 5][:5]]
+        bottom_elig_lines = [_ad_line(r) for r in sorted(
+            [x for x in ad_rows if (x.get('cv') or 0) <= 1], key=lambda x: -(x.get('spend') or 0))[:2]]
+
         budget_progress = (
             f"{float(total.get('spend') or 0) / budget * 100:.1f}%" if budget and budget > 0 else 'N/A'
         )
@@ -482,8 +493,14 @@ if GEMINI_API_KEY:
 ## CTA別KPI（当週）
 {chr(10).join(cta_lines)}
 
-## クリエイティブ別KPI 上位15件（LINE登録CPA昇順）
+## クリエイティブ別KPI 上位15件（LINE登録CPA昇順、CV0は末尾）
 {chr(10).join(top_ads_lines)}
+
+## 【上位分析の対象】LINE_CV≥5 の広告のみ（CV0〜4件の広告は母数不足のため「上位」に含めない）
+{chr(10).join(top_elig_lines) if top_elig_lines else '（該当なし：今週はCV5件以上の広告がないため上位分析は母数不足）'}
+
+## 【下位分析の対象】LINE_CV≤1 かつ spend上位の広告（最大2件）
+{chr(10).join(bottom_elig_lines) if bottom_elig_lines else '（該当なし）'}
 
 ---
 
@@ -513,9 +530,11 @@ if GEMINI_API_KEY:
 - 月間予算・目標達成の観点から優先順位を付けること
 
 ★ クリエイティブ要素
-以下の評価軸で上位5件（CPA良好順）と下位2件（CPA不振）を分析すること。
+上位は「【上位分析の対象】に列挙した広告」、下位は「【下位分析の対象】に列挙した広告」のみを分析すること。
+上位の対象がない/3件未満の場合は、無理に5件に埋めず「母数不足のため上位分析は限定的」と冒頭に明記すること（CV0の広告を上位に入れない）。
 動画を直接見ることはできないため、ad_name・scenario・CTR・CVRのデータから推定し、
-各推定には証拠強度（★★★/★★/★）を必ず付けること。
+表の見出しの直前に「※字幕・BGM・背景は動画未確認の推定」と明記し、各推定には証拠強度（★★★/★★/★）を必ず付けること。
+なおLINE_CV(complete_registration)は実態と乖離する既知の不具合がある指標のため、CPAの絶対値で断定せず相対比較に留めること。
 
 評価軸:
 1. フック（冒頭1〜3秒）: ターゲットが「自分ごと」と感じられるか
@@ -801,17 +820,27 @@ if write_mode:
         ).execute()
         print(f"  ST_KPI報告 書き込み完了（{len(batch_data)}セル）")
 
-    # ---- KPI報告 のコピーシート: 5セクションテキスト ----
-    report_cells = [
-        {'range': f"'{COPY_SHEET}'!P30",  'values': [[gemini_texts['sesaku']]]},
-        {'range': f"'{COPY_SHEET}'!T30",  'values': [[gemini_texts['youin']]]},
-        {'range': f"'{COPY_SHEET}'!X30",  'values': [[gemini_texts['shisa']]]},
-        {'range': f"'{COPY_SHEET}'!AB30", 'values': [[gemini_texts['next']]]},
-        # ラベル行
-        {'range': f"'{COPY_SHEET}'!AF29", 'values': [['★クリエイティブ要素分析']]},
-        # Gemini生成テキスト
-        {'range': f"'{COPY_SHEET}'!AF30", 'values': [[gemini_texts['creative']]]},
-    ]
+    # ---- KPI報告 のコピーシート: 4セクションテキスト（Q30/U30/Y30/AC30が実際のマージセル anchor）----
+    # 各セクションはマージセル（Q30:T30 事象 / U30:X30 要因仮説 / Y30:AB30 示唆 / AC30:AF30 ネクスト）の
+    # 左上anchorに書き込む必要がある。P30/T30/X30/AB30 に書くと隣接マージセルの非anchorセルに落ちて消える。
+    # 週次で上書きせず、既存の履歴に追記する（前週までの分析が消えないように）。
+    prefix = f"【{week_label}({start_date}-{end_date})追記】\n"
+    section_cells = {
+        'Q30':  prefix + gemini_texts['sesaku'],
+        'U30':  prefix + gemini_texts['youin'],
+        'Y30':  prefix + gemini_texts['shisa'],
+        'AC30': prefix + gemini_texts['next'] + "\n\n★クリエイティブ要素分析\n" + gemini_texts['creative'],
+    }
+    existing = svc.spreadsheets().values().batchGet(
+        spreadsheetId=KPI_SHEET_ID,
+        ranges=[f"'{COPY_SHEET}'!{cell}" for cell in section_cells]
+    ).execute().get('valueRanges', [])
+    report_cells = []
+    for (cell, new_text), vr in zip(section_cells.items(), existing):
+        old_vals = vr.get('values', [])
+        old_text = old_vals[0][0] if old_vals and old_vals[0] else ""
+        merged_text = f"{old_text}\n\n---\n\n{new_text}" if old_text else new_text
+        report_cells.append({'range': f"'{COPY_SHEET}'!{cell}", 'values': [[merged_text]]})
     svc.spreadsheets().values().batchUpdate(
         spreadsheetId=KPI_SHEET_ID,
         body={'valueInputOption': 'RAW', 'data': report_cells}

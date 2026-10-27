@@ -7,7 +7,7 @@ import os
 import sys
 
 # プロジェクトルートを動的に解決（scripts/ の親ディレクトリ）
-PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 TOKEN_FILE = os.path.join(PROJECT_ROOT, 'secrets', 'token.json')
 CREDS_FILE = os.path.join(PROJECT_ROOT, 'secrets', 'credentials.json')
 
@@ -19,6 +19,7 @@ SCOPES = [
     'https://www.googleapis.com/auth/calendar.events',
     'https://www.googleapis.com/auth/tasks',
     'https://www.googleapis.com/auth/bigquery',
+    'https://www.googleapis.com/auth/presentations',
 ]
 
 def main():

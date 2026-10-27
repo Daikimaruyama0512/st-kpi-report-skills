@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>塾講師ステーション｜LINEで大学生の塾バイト探し</title>
+<meta name="description" content="大学生の塾バイト探しなら塾講師ステーション。LINEで簡単登録・求人紹介。登録30秒・完全無料。">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-MQ4Q8W');</script>
+<!-- End Google Tag Manager -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" rel="stylesheet">
+<link href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" rel="stylesheet">
+
+<style>
+/* ===== RESET ===== */
+*, *::before, *::after { box-sizing: border-box; }
+html, body, div, span, h1, h2, h3, h4, p, img, ul, li, a, label, section, footer {
+  margin: 0; padding: 0; border: 0;
+}
+ul li { list-style: none; }
+a { color: #333; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+a:hover { opacity: 0.8; }
+img { width: 100%; display: block; }
+html { overflow-x: hidden; }
+body {
+  font-family: "M PLUS Rounded 1c", "Noto Sans JP", "ヒラギノ丸ゴ Pro W4", "Hiragino Maru Gothic Pro", "メイリオ", Meiryo, sans-serif;
+  font-weight: 500;
+  background: #FAE2D1;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ===== WRAP ===== */
+.wrap { max-width: 750px; width: 100%; margin: 0 auto; overflow: hidden; }
+
+/* ===== LINE BUTTON ===== */
+.line_btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2vw;
+  background: #06C755;
+  color: #fff;
+  font-size: 4.5vw;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  padding: 4.5vw 4vw;
+  border-radius: 50px;
+  width: 88%;
+  margin: 0 auto;
+  box-shadow: 0 4px 16px rgba(6,199,85,0.38);
+  transition: opacity 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.line_btn:hover { opacity: 0.85; color: #fff; }
+.line_btn svg { width: 6.5vw; height: 6.5vw; flex-shrink: 0; }
+@media (min-width: 751px) {
+  .line_btn { font-size: 18px; padding: 18px 32px; gap: 10px; max-width: 460px; }
+  .line_btn svg { width: 28px; height: 28px; }
+}
+.line_btn--white { background: #fff; color: #06C755; box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
+.line_btn--white:hover { opacity: 0.9; color: #06C755; }
+.line_btn--white svg path { fill: #06C755; }
+
+/* LINE icon SVG path */
+.line_icon { fill: white; }
+.line_btn--white .line_icon { fill: #06C755; }
+
+/* ===== FV ===== */
+/*
+  スペーシング黄金比スケール (φ=1.618)
+  小: 2.0vw / 中: 3.2vw / 大: 5.2vw = φ⁻¹ : φ⁰ : φ¹
+*/
+.fv {
+  background: #FAE2D1;
+  padding: 5.2vw 2.6vw 0;  /* 上部余白を φ¹ スケールに */
+  text-align: center;
+}
+@media (min-width: 751px) { .fv { padding: 39px 20px 0; } }
+
+.fv__badge {
+  display: inline-block;
+  background: rgba(255,112,25,0.12);
+  color: #FF7019;
+  font-size: 3.2vw;
+  font-weight: 700;
+  padding: 1vw 2.4vw;
+  border-radius: 20px;
+  margin-bottom: 2.0vw;  /* φ⁻¹: バッジ直後は小間隔 */
+  letter-spacing: 0.04em;
+  border: 1.5px solid rgba(255,112,25,0.35);
+}
+@media (min-width: 751px) {
+  .fv__badge { font-size: 13px; padding: 6px 18px; margin-bottom: 15px; }
+}
+
+.fv__copy {
+  font-size: 7vw;
+  font-weight: 900;
+  color: #222;
+  line-height: 1.45;
+  margin-bottom: 3.2vw;  /* φ⁰: コピー後は中間隔 */
+  letter-spacing: -0.01em;
+}
+@media (min-width: 751px) { .fv__copy { font-size: 34px; margin-bottom: 20px; } }
+.fv__copy em { color: #FF7019; font-style: normal; }
+
+.fv__sub {
+  font-size: 3.3vw;
+  color: #666;
+  line-height: 1.8;
+  margin-bottom: 5.2vw;  /* φ¹: CTA直前は大間隔（最重要アクションへの視線誘導） */
+}
+@media (min-width: 751px) { .fv__sub { font-size: 14px; margin-bottom: 39px; } }
+.fv__sub strong { color: #FF7019; font-weight: 700; }
+
+.fv__note {
+  font-size: 2.7vw;
+  color: #aaa;
+  margin-top: 2.0vw;   /* φ⁻¹: ボタン直後は小間隔 */
+  margin-bottom: 2.0vw; /* φ⁻¹: note〜画像も小間隔 */
+}
+@media (min-width: 751px) { .fv__note { font-size: 11px; margin-top: 15px; margin-bottom: 15px; } }
+
+.fv__img { margin-top: 3.2vw; }  /* φ⁰: 画像前は中間隔 */
+@media (min-width: 751px) { .fv__img { margin-top: 24px; } }
+
+/* ===== STATS ===== */
+.stats {
+  background: #fff;
+  padding: 5.2vw 2.6vw;  /* φ¹ */
+}
+@media (min-width: 751px) { .stats { padding: 39px 10px; } }
+.stats__grid {
+  display: flex;
+  justify-content: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.stats__item {
+  flex: 1;
+  text-align: center;
+  padding: 2.0vw 1vw;  /* φ⁻¹ */
+  border-right: 1px solid #eee;
+}
+@media (min-width: 751px) { .stats__item { padding: 15px 8px; } }
+.stats__item:last-child { border-right: none; }
+.stats__num {
+  font-size: 7.8vw;
+  font-weight: 900;
+  color: #FF7019;
+  line-height: 1;
+  margin-bottom: 2.0vw;  /* φ⁻¹: 数字→ラベルは小間隔 */
+}
+@media (min-width: 751px) { .stats__num { font-size: 38px; margin-bottom: 15px; } }
+.stats__num span { font-size: 3.4vw; font-weight: 700; }
+@media (min-width: 751px) { .stats__num span { font-size: 16px; } }
+.stats__label {
+  font-size: 2.7vw;
+  color: #666;
+  line-height: 1.5;
+  font-weight: 500;
+}
+@media (min-width: 751px) { .stats__label { font-size: 11px; } }
+
+/* ===== SECTION TITLE ===== */
+.section__ttl {
+  font-size: 4.8vw;
+  font-weight: 900;
+  color: #222;
+  line-height: 1.55;
+}
+@media (min-width: 751px) { .section__ttl { font-size: 22px; } }
+.section__ttl em { color: #FF7019; font-style: normal; }
+
+/* ===== STEPS ===== */
+.steps {
+  background: #FAF8F5;
+  padding: 5.2vw 2.6vw 5.2vw;  /* φ¹ */
+  text-align: center;
+}
+@media (min-width: 751px) { .steps { padding: 39px 20px 39px; } }
+.steps .section__ttl { margin-bottom: 3.2vw; }  /* φ⁰ */
+@media (min-width: 751px) { .steps .section__ttl { margin-bottom: 24px; } }
+
+.steps__list {
+  max-width: 560px;
+  margin: 0 auto 5.2vw;  /* φ¹: リスト→CTA */
+}
+@media (min-width: 751px) { .steps__list { margin-bottom: 39px; } }
+
+.steps__item {
+  display: flex;
+  align-items: center;
+  gap: 2.6vw;
+  background: #fff;
+  border-radius: 3.2vw;
+  padding: 3.2vw 4vw;  /* φ⁰ */
+  text-align: left;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+  margin-bottom: 0.5vw;
+}
+@media (min-width: 751px) {
+  .steps__item { gap: 16px; padding: 24px 20px; border-radius: 16px; margin-bottom: 4px; }
+}
+
+.steps__num {
+  width: 9vw;
+  height: 9vw;
+  border-radius: 50%;
+  background: #FF7019;
+  color: #fff;
+  font-size: 4.2vw;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+@media (min-width: 751px) { .steps__num { width: 46px; height: 46px; font-size: 20px; } }
+
+.steps__text strong {
+  display: block;
+  font-size: 3.7vw;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 1.0vw;  /* φ⁻¹ の半分: 強調→説明は密にする */
+}
+@media (min-width: 751px) { .steps__text strong { font-size: 16px; margin-bottom: 7px; } }
+.steps__text span { font-size: 3vw; color: #777; line-height: 1.5; }
+@media (min-width: 751px) { .steps__text span { font-size: 13px; } }
+
+.steps__arrow {
+  text-align: center;
+  font-size: 5.5vw;
+  color: #FF7019;
+  padding: 2.0vw 0;  /* φ⁻¹ */
+}
+@media (min-width: 751px) { .steps__arrow { font-size: 22px; padding: 15px 0; } }
+
+/* ===== VOICE SLIDER ===== */
+.voice_head {
+  background: #FAF8F5;
+  padding: 5.2vw 2.6vw 3.2vw;  /* φ¹ 上 / φ⁰ 下 */
+  text-align: center;
+}
+@media (min-width: 751px) { .voice_head { padding: 39px 20px 24px; } }
+
+.voice_slider_area { background: #FAF8F5; padding-bottom: 8px; overflow: hidden; position: relative; }
+.voice_slider li {
+  margin: 0 2.6vw 4vw;
+  filter: drop-shadow(0.8vw 0.8vw 0.8vw rgba(63,60,53,0.2));
+  cursor: pointer;
+}
+/* slickが未初期化の場合も横スクロール防止 */
+.voice_slider { overflow: hidden; }
+@media (min-width: 751px) {
+  .voice_slider li { margin: 0 20px 30px; filter: drop-shadow(6px 6px 6px rgba(63,60,53,0.2)); }
+}
+
+/* ===== SWITCH AREA ===== */
+.switch_head {
+  background: #FAF8F5;
+  padding: 5.2vw 2.6vw 3.2vw;  /* φ¹ 上 / φ⁰ 下 */
+  text-align: center;
+}
+@media (min-width: 751px) { .switch_head { padding: 39px 20px 24px; } }
+
+.switch_area {
+  background: #F2EBE1;
+  padding: 5.2vw 0 13.6vw;  /* φ¹ 上 / φ²×φ⁻¹≈φ 下（大きな余白で締める） */
+}
+@media (min-width: 751px) { .switch_area { padding: 39px 0 102px; } }
+
+.switch_area_lead {
+  text-align: center;
+  margin-bottom: 5.2vw;  /* φ¹ */
+  padding: 0 2.6vw;
+}
+@media (min-width: 751px) { .switch_area_lead { margin-bottom: 39px; padding: 0 20px; } }
+.switch_area_lead h2 {
+  font-size: 4.5vw;
+  font-weight: 900;
+  color: #333;
+  line-height: 1.6;
+}
+@media (min-width: 751px) { .switch_area_lead h2 { font-size: 21px; } }
+
+.switch_box {
+  width: 86.6vw;
+  margin: 0 auto;
+  padding-bottom: 3.2vw;  /* φ⁰ */
+  border-radius: 5.3vw;
+  background: #FFDC78;
+}
+@media (min-width: 751px) { .switch_box { width: 650px; padding-bottom: 24px; border-radius: 40px; } }
+.switch_box:not(:last-child) { margin-bottom: 5.2vw; }  /* φ¹ */
+@media (min-width: 751px) { .switch_box:not(:last-child) { margin-bottom: 39px; } }
+
+.switch_box > h2 {
+  border-radius: 5.3vw 5.3vw 0 0;
+  background: #FF7019;
+  padding: 2.0vw 2.6vw;  /* φ⁻¹ */
+  font-size: 5vw;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+}
+@media (min-width: 751px) {
+  .switch_box > h2 { border-radius: 40px 40px 0 0; font-size: 19px; padding: 15px 20px; }
+}
+
+.toggle_box .btn_box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3.2vw 4.6vw;  /* φ⁰ */
+}
+@media (min-width: 751px) { .toggle_box .btn_box { padding: 24px 35px; } }
+
+.toggle_box .btn_box p {
+  color: #222;
+  font-size: 5.3vw;
+  font-weight: 700;
+  width: 29.3vw;
+  line-height: 1.4;
+}
+@media (min-width: 751px) { .toggle_box .btn_box p { font-size: 17px; width: 120px; } }
+.toggle_box .btn_box p:last-child { text-align: right; }
+.toggle_box .btn_box p small { font-size: 0.75em; font-weight: 400; color: #555; }
+
+.toggle_button {
+  display: inline-block;
+  position: relative;
+  width: 17.3vw;
+  height: 8vw;
+  border-radius: 6.6vw;
+  background-color: #FF7019;
+  cursor: pointer;
+  transition: background-color 0.4s;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+@media (min-width: 751px) { .toggle_button { width: 130px; height: 60px; border-radius: 50px; } }
+.toggle_button:has(:checked) { background-color: #1478D2; }
+.toggle_button:has(:checked)::before { left: 9.3vw; }
+@media (min-width: 751px) { .toggle_button:has(:checked)::before { left: 70px; } }
+.toggle_button:has(:checked)::after { left: 10.2vw; }
+@media (min-width: 751px) { .toggle_button:has(:checked)::after { left: 77px; } }
+
+.toggle_button::before, .toggle_button::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  box-sizing: border-box;
+  transition: left 0.4s;
+}
+.toggle_button::before {
+  top: 0; left: 0;
+  width: 8vw; height: 8vw;
+  border: 4px solid transparent;
+  background: linear-gradient(0deg, rgb(211,211,211) 0%, rgb(255,255,255) 58%);
+}
+@media (min-width: 751px) { .toggle_button::before { width: 60px; height: 60px; } }
+.toggle_button::after {
+  top: 0.93vw; left: 0.93vw;
+  width: 6.1vw; height: 6.1vw;
+  background: linear-gradient(180deg, rgb(211,211,211) 0%, rgb(255,255,255) 58%);
+}
+@media (min-width: 751px) { .toggle_button::after { top: 7px; left: 7px; width: 46px; height: 46px; } }
+.toggle_button input { display: none; }
+
+.toggle_box:has(input:not(:checked)) .toggle_button::before { border-color: #FF7019; }
+.toggle_box:has(input:checked) .toggle_button::before { border-color: #1478D2; }
+
+.select_box { display: flex; justify-content: center; }
+.select_box .box {
+  width: 38.5vw;
+  border: 1.06vw solid transparent;
+  transition: border-color 0.3s;
+  background: #fff;
+}
+@media (min-width: 751px) { .select_box .box { width: 289px; border-width: 8px; } }
+.select_box .box.left { border-radius: 4vw 0 0 4vw; }
+.select_box .box.right { border-radius: 0 4vw 4vw 0; }
+@media (min-width: 751px) {
+  .select_box .box.left { border-radius: 30px 0 0 30px; }
+  .select_box .box.right { border-radius: 0 30px 30px 0; }
+}
+.toggle_box:has(input:not(:checked)) .left { border-color: #FF7019; }
+.toggle_box:has(input:checked) .right { border-color: #1478D2; }
+
+/* ===== SEARCH SLIDER ===== */
+.search_head {
+  background: #FAF8F5;
+  padding: 5.2vw 2.6vw 3.2vw;  /* φ¹ 上 / φ⁰ 下 */
+  text-align: center;
+}
+@media (min-width: 751px) { .search_head { padding: 39px 20px 24px; } }
+
+.search_slider_area {
+  background: #FAF8F5;
+  padding-bottom: 40px;
+}
+.search_slider_wrap {
+  position: relative;
+  width: 74.6vw;
+  margin: 0 auto;
+}
+@media (min-width: 751px) { .search_slider_wrap { width: 560px; } }
+
+.search_arrow {
+  width: 5.06vw;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  z-index: 10;
+}
+@media (min-width: 751px) { .search_arrow { width: 38px; } }
+.search_arrow.arrow_prev { left: -7.3vw; }
+.search_arrow.arrow_next { right: -7.3vw; }
+@media (min-width: 751px) {
+  .search_arrow.arrow_prev { left: -55px; }
+  .search_arrow.arrow_next { right: -55px; }
+}
+
+/* ===== TERMS SLIDER ===== */
+.terms_head {
+  background: #FAF8F5;
+  padding: 5.2vw 2.6vw 3.2vw;  /* φ¹ 上 / φ⁰ 下 */
+  text-align: center;
+}
+@media (min-width: 751px) { .terms_head { padding: 39px 20px 24px; } }
+
+.terms_slider_area { background: #FF7019; overflow: hidden; position: relative; }
+.terms_slider { overflow: hidden; }
+.terms_slider li { margin: 0 2.6vw; }
+@media (min-width: 751px) { .terms_slider li { margin: 0 20px; } }
+
+.terms_note { background: #FAF8F5; }
+
+/* ===== REASON ===== */
+.reason {
+  background: #fff;
+  padding: 5.2vw 2.6vw 5.2vw;  /* φ¹ */
+  text-align: center;
+}
+@media (min-width: 751px) { .reason { padding: 39px 20px 39px; } }
+.reason .section__ttl { margin-bottom: 3.2vw; }  /* φ⁰ */
+@media (min-width: 751px) { .reason .section__ttl { margin-bottom: 24px; } }
+
+.reason__list {
+  max-width: 560px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3.2vw;  /* φ⁰ */
+}
+@media (min-width: 751px) { .reason__list { gap: 24px; } }
+
+.reason__item {
+  display: flex;
+  align-items: center;
+  gap: 2.6vw;
+  background: #FAF8F5;
+  border-radius: 2.6vw;
+  padding: 3.2vw 3.7vw;  /* φ⁰ */
+  text-align: left;
+}
+@media (min-width: 751px) { .reason__item { gap: 14px; padding: 24px 18px; border-radius: 14px; } }
+
+.reason__icon {
+  width: 8.5vw;
+  height: 8.5vw;
+  border-radius: 50%;
+  background: #FF7019;
+  color: #fff;
+  font-size: 4.2vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+@media (min-width: 751px) { .reason__icon { width: 44px; height: 44px; font-size: 20px; } }
+
+.reason__text {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+.reason__text strong {
+  display: block;
+  font-size: 3.5vw;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 1.0vw;  /* 小間隔（φ⁻¹の半分）: 強調→説明は密に */
+}
+@media (min-width: 751px) { .reason__text strong { font-size: 15px; margin-bottom: 7px; } }
+.reason__text span { font-size: 3vw; color: #777; line-height: 1.5; }
+@media (min-width: 751px) { .reason__text span { font-size: 13px; } }
+
+/* ===== LAST CTA ===== */
+.last_cta {
+  background: #FF7019;
+  padding: 8.4vw 2.6vw 8.4vw;  /* φ²: ラストCTAは最大余白で存在感を強調 */
+  text-align: center;
+}
+@media (min-width: 751px) { .last_cta { padding: 63px 20px 63px; } }
+
+.last_cta__ttl {
+  font-size: 5.6vw;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.5;
+  margin-bottom: 2.0vw;  /* φ⁻¹ */
+}
+@media (min-width: 751px) { .last_cta__ttl { font-size: 26px; margin-bottom: 15px; } }
+
+.last_cta__sub {
+  font-size: 3.2vw;
+  color: rgba(255,255,255,0.88);
+  margin-bottom: 5.2vw;  /* φ¹: CTA直前は大間隔 */
+}
+@media (min-width: 751px) { .last_cta__sub { font-size: 14px; margin-bottom: 39px; } }
+
+.last_cta__note {
+  font-size: 2.9vw;
+  color: rgba(255,255,255,0.65);
+  margin-top: 2.0vw;  /* φ⁻¹ */
+}
+@media (min-width: 751px) { .last_cta__note { font-size: 12px; margin-top: 15px; } }
+
+/* ===== FOOTER ===== */
+.footer {
+  background: #FFF7F1;
+  padding: 5.2vw 2.6vw;  /* φ¹: フッターもスケール統一 */
+  text-align: center;
+  font-size: 3vw;
+  color: #aaa;
+}
+@media (min-width: 751px) { .footer { padding: 39px 20px; font-size: 12px; } }
+</style>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MQ4Q8W" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<div class="wrap">
+
+  <!-- =========================================
+    1. FV
+  ========================================= -->
+  <section class="fv">
+    <p class="fv__badge">年間2.7万人の大学生が選んだ</p>
+    <h1 class="fv__copy">座って稼いで、<br><em>就活も制す。</em></h1>
+    <p class="fv__sub">
+      週1コマOK・時給<strong>1,500円〜</strong>・ガクチカにもなる。<br>塾バイト専門1.5万件から、LINEで条件検索。
+    </p>
+    <!-- LINE CTA ① -->
+    <a href="https://lin.ee/XXXXXXX" class="line_btn">
+      <svg viewBox="0 0 24 24" width="28" height="28">
+        <path class="line_icon" d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.105.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/>
+      </svg>
+      LINEで今すぐ無料で探す
+    </a>
+    <p class="fv__note">※登録無料・退会いつでも可・個人情報不要で今すぐ開始</p>
+    <div class="fv__img">
+      <div style="position:relative;width:100%;height:0;padding-top:56.2225%;overflow:hidden;border-radius:4vw;box-shadow:0 2px 8px 0 rgba(63,69,81,0.16);">
+        <iframe loading="lazy" style="position:absolute;width:100%;height:100%;top:0;left:0;border:none;padding:0;margin:0;"
+          src="https://www.canva.com/design/DAHOBGi4bVc/HKuL2dHd2FIhvw6pNo-IPQ/view?embed"
+          allowfullscreen="allowfullscreen" allow="fullscreen">
+        </iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+    2. STATS
+  ========================================= -->
+  <section class="stats">
+    <div class="stats__grid">
+      <div class="stats__item">
+        <div class="stats__num">1.5<span>万件</span></div>
+        <div class="stats__label">掲載求人数</div>
+      </div>
+      <div class="stats__item">
+        <div class="stats__num">2.7<span>万人</span></div>
+        <div class="stats__label">大学生の<br>年間利用実績</div>
+      </div>
+      <div class="stats__item">
+        <div class="stats__num">30<span>秒</span></div>
+        <div class="stats__label">LINE登録<br>完了時間</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+    3. 3 STEPS
+  ========================================= -->
+  <section class="steps">
+    <h2 class="section__ttl"><em>3ステップ</em>で塾バイトが見つかる</h2>
+    <div class="steps__list">
+      <div class="steps__item">
+        <div class="steps__num">1</div>
+        <div class="steps__text">
+          <strong>LINEで友だち追加（30秒）</strong>
+          <span>個人情報の入力不要・アカウント登録なし・今すぐ開始できる</span>
+        </div>
+      </div>
+      <div class="steps__arrow">▼</div>
+      <div class="steps__item">
+        <div class="steps__num">2</div>
+        <div class="steps__text">
+          <strong>塾ブランド診断で自分に合う塾を見つける</strong>
+          <span>LINEで診断するだけ。エリア・指導形態・雰囲気から自動マッチング</span>
+        </div>
+      </div>
+      <div class="steps__arrow">▼</div>
+      <div class="steps__item">
+        <div class="steps__num">3</div>
+        <div class="steps__text">
+          <strong>気になった塾に応募する</strong>
+          <span>LINEから直接問い合わせOK。最短1週間で採用・完全無料</span>
+        </div>
+      </div>
+    </div>
+    <!-- LINE CTA ② -->
+    <a href="https://lin.ee/XXXXXXX" class="line_btn">
+      <svg viewBox="0 0 24 24" width="28" height="28">
+        <path class="line_icon" d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.105.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/>
+      </svg>
+      無料で友だち追加する
+    </a>
+  </section>
+
+  <!-- =========================================
+    4. VOICE SLIDER（口コミ）
+  ========================================= -->
+  <div class="voice_head">
+    <h2 class="section__ttl">塾バイトをやって良かった！<br><em>そんな瞬間</em>がここで見つかる。</h2>
+  </div>
+  <div class="voice_slider_area">
+    <ul class="voice_slider">
+      <li><img src="https://peraichi.com/user_files/download/7222bd90-fa66-013e-65e2-0a58a9feac02" alt="勉強に苦手意識を持っていた生徒が私の授業を受けて晴れ晴れとした顔に！"></li>
+      <li><img src="https://peraichi.com/user_files/download/74015740-fa66-013e-65e3-0a58a9feac02" alt="わからなくてつまらなさそうにしていた子が理解できて嬉しそうな表情になった時"></li>
+      <li><img src="https://peraichi.com/user_files/download/75d95820-fa66-013e-65e4-0a58a9feac02" alt="授業が面白いと評価されたとき。また、教え子の合格は自分のこと以上に感動！"></li>
+      <li><img src="https://peraichi.com/user_files/download/77c2d620-fa66-013e-65e5-0a58a9feac02" alt="生徒の微笑ましい行動を思い出し笑いしそうになりながら授業をやり切った時も"></li>
+      <li><img src="https://peraichi.com/user_files/download/79d997f0-fa66-013e-65e6-0a58a9feac02" alt="特に苦手だった科目を克服して、定期試験などで点数が伸びているのを見た時"></li>
+      <li><img src="https://peraichi.com/user_files/download/7bd3d4a0-fa66-013e-65e7-0a58a9feac02" alt="先生の教え方わかりやすいとか、先生はとても話しやすいと言ってもらえた時"></li>
+      <li><img src="https://peraichi.com/user_files/download/7df81c90-fa66-013e-65e8-0a58a9feac02" alt="生徒が自分から話しかけてくれるなど、心を開いてくれた時。講師同士の仲も良い"></li>
+      <li><img src="https://peraichi.com/user_files/download/7fcded40-fa66-013e-65e9-0a58a9feac02" alt="成績が上がった時の生徒の笑顔。楽しそうに私の話を聞いてくれていると嬉しくなる"></li>
+    </ul>
+  </div>
+
+  <!-- =========================================
+    5. TOGGLE SWITCH
+  ========================================= -->
+  <div class="switch_head">
+    <h2 class="section__ttl">最高のやりがいは、<em>自分に合った塾探し</em>から。<br>まずは自分らしい働き方をチェック</h2>
+  </div>
+  <div class="switch_area">
+    <div class="switch_area_lead">
+      <h2>スイッチを切り替えて<br>様々な働き方から塾バイトを探そう！</h2>
+    </div>
+
+    <!-- 指導形態 -->
+    <div class="switch_box">
+      <h2>指導形態は？</h2>
+      <div class="toggle_box">
+        <div class="btn_box">
+          <p>個別指導</p>
+          <label class="toggle_button"><input type="checkbox"></label>
+          <p>集団指導</p>
+        </div>
+        <div class="select_box">
+          <div class="box left"><img src="https://peraichi.com/user_files/download/4a0a3350-fa66-013e-65ce-0a58a9feac02" alt="勉強と気持ちをサポート。1対1でじっくり伴走する"></div>
+          <div class="box right"><img src="https://peraichi.com/user_files/download/4c2bed70-fa66-013e-65cf-0a58a9feac02" alt="場の空気を掴んで学びを届ける"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 服装 -->
+    <div class="switch_box">
+      <h2>指導時の服装は？</h2>
+      <div class="toggle_box">
+        <div class="btn_box">
+          <p>茶髪/私服</p>
+          <label class="toggle_button"><input type="checkbox"></label>
+          <p>黒髪/スーツ</p>
+        </div>
+        <div class="select_box">
+          <div class="box left"><img src="https://peraichi.com/user_files/download/50380610-fa66-013e-65d1-0a58a9feac02" alt="大学帰りにそのまま直行。等身大の自分で働く"></div>
+          <div class="box right"><img src="https://peraichi.com/user_files/download/522540f0-fa66-013e-65d2-0a58a9feac02" alt="ビシッと仕事モードで、信頼を勝ち取る自分にアップデート"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 指導内容 -->
+    <div class="switch_box">
+      <h2>指導内容は？</h2>
+      <div class="toggle_box">
+        <div class="btn_box">
+          <p>補習指導</p>
+          <label class="toggle_button"><input type="checkbox"></label>
+          <p>受験指導</p>
+        </div>
+        <div class="select_box">
+          <div class="box left"><img src="https://peraichi.com/user_files/download/5675a6b0-fa66-013e-65d4-0a58a9feac02" alt="勉強の楽しさを教える。勉強が苦手な子に寄り添って伴走する"></div>
+          <div class="box right"><img src="https://peraichi.com/user_files/download/584ff780-fa66-013e-65d5-0a58a9feac02" alt="合格への戦略を練る。自分の受験経験がそのまま武器に"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 雰囲気 -->
+    <div class="switch_box">
+      <h2>職場の雰囲気は？</h2>
+      <div class="toggle_box">
+        <div class="btn_box">
+          <p>効率重視</p>
+          <label class="toggle_button"><input type="checkbox"></label>
+          <p>居場所重視</p>
+        </div>
+        <div class="select_box">
+          <div class="box left"><img src="https://peraichi.com/user_files/download/5d0c9020-fa66-013e-65d7-0a58a9feac02" alt="仕事はスマートに。オンオフのメリハリ重視で過ごしたい"></div>
+          <div class="box right"><img src="https://peraichi.com/user_files/download/5ee6f000-fa66-013e-65d8-0a58a9feac02" alt="バイト先での一期一会。みんなで楽しく働きたい"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================
+    6. SEARCH SLIDER（こだわり条件）
+  ========================================= -->
+  <div class="search_head">
+    <h2 class="section__ttl">塾講師STATIONなら<br><em>あなたの条件</em>に合った塾バイトが探せる！</h2>
+  </div>
+  <div class="search_slider_area">
+    <div class="search_slider_wrap">
+      <ul class="search_slider">
+        <li><img src="https://peraichi.com/user_files/download/20cc50f0-fa66-013e-65c7-0a58a9feac02" alt="大学の近く？家の近く？寄り添い型の個別指導！大学帰りにバイトに直行したい！"></li>
+        <li><img src="https://peraichi.com/user_files/download/2fe2f370-fa66-013e-65c8-0a58a9feac02" alt="試験が多いからシフトは控えめに 経験が活かせるところで働きたい！ 補習指導で勉強の楽しさを教えたい！"></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- =========================================
+    7. TERMS SLIDER（先輩のこだわり条件）
+  ========================================= -->
+  <div class="terms_head">
+    <h2 class="section__ttl">塾講師STATIONを使った<br><em>先輩のこだわり条件</em></h2>
+  </div>
+  <div class="terms_slider_area">
+    <ul class="terms_slider">
+      <li><img src="https://peraichi.com/user_files/download/66ce65b0-fa66-013e-65dc-0a58a9feac02" alt="実家の近所×個別指導"></li>
+      <li><img src="https://peraichi.com/user_files/download/68a816e0-fa66-013e-65dd-0a58a9feac02" alt="通学路の沿線×個別指導"></li>
+      <li><img src="https://peraichi.com/user_files/download/6a693100-fa66-013e-65de-0a58a9feac02" alt="地域×集団指導×指導科目"></li>
+    </ul>
+  </div>
+  <div class="terms_note">
+    <img src="https://peraichi.com/user_files/download/62e4c0d0-fa66-013e-65da-0a58a9feac02" alt="教室選びで迷ったら、口コミもチェック！">
+  </div>
+
+  <!-- =========================================
+    8. REASON（選ばれる理由）
+  ========================================= -->
+  <section class="reason">
+    <h2 class="section__ttl">塾講師STATIONが<em>選ばれる理由</em></h2>
+    <div class="reason__list">
+      <div class="reason__item">
+        <div class="reason__icon">✓</div>
+        <div class="reason__text">
+          <strong>登録・利用すべて完全無料</strong>
+          <span>費用は一切かかりません。LINEを開くだけで求人を閲覧できます</span>
+        </div>
+      </div>
+      <div class="reason__item">
+        <div class="reason__icon">✓</div>
+        <div class="reason__text">
+          <strong>大学生に特化した1.5万件の求人</strong>
+          <span>週1〜OK・未経験可・髪色自由など大学生向け条件が日本最大級</span>
+        </div>
+      </div>
+      <div class="reason__item">
+        <div class="reason__icon">✓</div>
+        <div class="reason__text">
+          <strong>LINEで塾ブランド診断・求人チェック</strong>
+          <span>LINEを開くだけで診断→求人まで完結。スマホ1台で全部できる</span>
+        </div>
+      </div>
+      <div class="reason__item">
+        <div class="reason__icon">✓</div>
+        <div class="reason__text">
+          <strong>口コミ・雰囲気で塾を選べる</strong>
+          <span>先輩講師のリアルな口コミで、入る前に職場の雰囲気がわかる</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+    9. LAST CTA
+  ========================================= -->
+  <section class="last_cta">
+    <h2 class="last_cta__ttl">まずはLINEで<br>求人をチェック</h2>
+    <p class="last_cta__sub">登録30秒・完全無料・退会いつでも可</p>
+    <!-- LINE CTA ③ -->
+    <a href="https://lin.ee/XXXXXXX" class="line_btn line_btn--white">
+      <svg viewBox="0 0 24 24" width="28" height="28">
+        <path class="line_icon" d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.105.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/>
+      </svg>
+      友だち追加して求人を見る
+    </a>
+    <p class="last_cta__note">※登録無料・退会いつでも可</p>
+  </section>
+
+  <!-- =========================================
+    10. FOOTER
+  ========================================= -->
+  <footer class="footer">
+    Copyright 2025 株式会社トモノカイ
+  </footer>
+
+</div><!-- /wrap -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<script>
+$(function(){
+  // スムーススクロール
+  $('a[href^="#"]').click(function() {
+    var speed = 400;
+    var href = $(this).attr("href");
+    var target = $(href == "#" || href == "" ? 'html' : href);
+    var position = target.offset().top;
+    $('body,html').animate({scrollTop: position}, speed, 'swing');
+    return false;
+  });
+
+  // 口コミスライダー
+  $(".voice_slider").slick({
+    infinite: true,
+    autoplay: true,
+    autoplaySpeed: 4000,
+    arrows: false,
+    dots: false,
+    centerMode: true,
+    centerPadding: "11%",
+  });
+
+  // 条件検索スライダー
+  $(".search_slider").slick({
+    infinite: true,
+    autoplay: false,
+    arrows: true,
+    dots: false,
+    prevArrow: '<img class="search_arrow arrow_prev" src="https://peraichi.com/user_files/download/0701f630-fa66-013e-65bf-0a58a9feac02" alt="前へ">',
+    nextArrow: '<img class="search_arrow arrow_next" src="https://peraichi.com/user_files/download/04f1a7a0-fa66-013e-65be-0a58a9feac02" alt="次へ">'
+  });
+
+  // 先輩条件スライダー
+  $(".terms_slider").slick({
+    infinite: true,
+    autoplay: true,
+    autoplaySpeed: 5000,
+    arrows: false,
+    dots: false,
+    centerMode: true,
+    centerPadding: "14%",
+  });
+});
+</script>
+
+</body>
+</html>

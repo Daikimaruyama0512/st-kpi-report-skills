@@ -42,6 +42,7 @@ description: 「シナリオ作って」「シナリオ修正して」「〇月�
 | `knowledge/creative/FY25_STSNS広告PDCA管理_LP.md` | LPフレームワーク整理（PASONA/QUEST構成・CTA別訴求軸） |
 | `knowledge/creative/creative_trend_insights.md` | **BigQuery実績データから導出したCTA・訴求軸・字幕文字数・テンポの成果傾向（最新分析）** ← kpi-reportスキルのSTEP 3b で更新される |
 | `knowledge/creative/monthly_seasonal_variables.md` | **月別季節変数マスタ（12ヶ月のセグメント割合・フックアイデア・推奨CTA・NG表現）← STEP 3で対象月のみ参照** |
+| `knowledge/business/ST_Meta_LINE_戦略.md` | **【2026-09-30追加・必読】アドエビス実測に基づく正しい月次ファネル数値（登録CV・応募CV・転換率）。BigQueryの`complete_registration`は実態と乖離するため使用禁止と明記されている一次情報。応募数の根本課題（登録ページ/診断フローのLPO未着手）もここに記載** |
 
 > **削除済みファイル（参照不要）**
 > - `ST_05_大学生カレンダー.md` → `monthly_seasonal_variables.md` に統合済み。月別心理フェーズ・需要スコアは後者を参照

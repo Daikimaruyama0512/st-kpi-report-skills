@@ -9,5 +9,55 @@
       "WebFetch",
       "WebSearch"
     ]
+  },
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 /Users/119322/Desktop/claude-code-template_af/.claude/hooks/context_monitor.py",
+            "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "node /Users/119322/Desktop/claude-code-template_af/.claude/hooks/refresh-google-tokens.js",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 /Users/119322/Desktop/claude-code-template_af/.claude/hooks/pre-write-secrets-scan.py"
+          }
+        ]
+      }
+    ],
+    "PostCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 /Users/119322/Desktop/claude-code-template_af/.claude/hooks/post-compact-inject.py"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 /Users/119322/Desktop/claude-code-template_af/.claude/hooks/session_start.py",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
   }
 }

@@ -1,3 +1,4 @@
+
 ---
 name: kpi-report
 description: 「KPI報告して」「週次報告」「月次レポート」「KPIまとめて」など、Meta広告のKPI報告・分析レポートを依頼されたときに発動。CA・ST両対応。ST：BigQueryで週次・CTA別・CR別データをすべて取得（集計さんシート不要）→ST_KPI報告の入力タブから予算補完→4セクション形式で出力。CA：BigQueryデータ取得→結論・根拠・アクションの順でレポートを出す。
@@ -79,6 +80,7 @@ GEMINI_API_KEY=AIza...
 | `knowledge/target/customer_info_st.md` | STターゲット属性・時期別心理フェーズ |
 | `knowledge/target/who_what_how.md` | WHO/WHAT/HOW構造定義 |
 | `knowledge/data/ST_Meta広告集計さん_KPI報告.md` | 出力フォーマット見本 |
+| `knowledge/business/ST_Meta_LINE_戦略.md` | **【2026-09-30追加・必読】BigQueryの`complete_registration`/`purchase`は実態と4倍以上乖離するため使用禁止と明記されている。極端な数値（CPA¥100,000超・CV0等）が出た場合は必ずこのファイルのアドエビス実測ファネル表と突き合わせること（9/23-28週のレポートで実際にこれが原因の誤判定が発生した）** |
 
 ---
 
@@ -109,7 +111,7 @@ SPREADSHEET_ID: 1xXeCl4Xbkxz-w_jT49TmA3-voruL2cTbF1f308hZ5vQ
 | シート名 | 書き込み内容 |
 |---|---|
 | `ST_KPI報告` | 当週列・累積列に LINE_CV / 応募CV / 応募CPA / COST / CTA別CV を書き込む |
-| `KPI報告 のコピー` | P30/T30/X30/AB30 にGemini生成テキスト（事象・要因仮説・示唆・ネクスト）を書き込む |
+| `KPI報告 のコピー` | Q30/U30/Y30/AC30 にGemini生成テキスト（事象・要因仮説・示唆・ネクスト）を書き込む |
 
 ### 注意事項
 
@@ -141,10 +143,10 @@ SPREADSHEET_ID: 1xXeCl4Xbkxz-w_jT49TmA3-voruL2cTbF1f308hZ5vQ
 
 | セル | 内容 |
 |---|---|
-| P30 | ★事象（Gemini生成） |
-| T30 | ★要因仮説（Gemini生成） |
-| X30 | ★示唆（Gemini生成） |
-| AB30 | ★ネクスト（Gemini生成） |
+| Q30 | ★事象（Gemini生成） |
+| U30 | ★要因仮説（Gemini生成） |
+| Y30 | ★示唆（Gemini生成） |
+| AC30 | ★ネクスト（Gemini生成） |
 | AL2:AR10 | 月次KPIデータ（直近6ヶ月 / チャート自動更新用） |
 
 > **月次チャートについて**: `create_monthly_charts.py` で作成した8本の折れ線グラフ（LINE登録CV / 応募CV / 応募CPA / COST / CPF / CTR / CVR / CPM）の元データが AL2:AR10 に書き込まれ、チャートが自動更新される。初回のみ `python3 scripts/kpi/create_monthly_charts.py` の実行が必要（作成済み）。

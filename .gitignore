@@ -8,3 +8,18 @@ node_modules/
 .DS_Store
 scripts/kpi_report_st_data.json
 scripts/analysis_result.csv
+.claude/hooks/.warn_state.json
+# 別リポジトリ（足立さん管理）
+workspace-share/
+# 生成データ・社内資料・キャッシュ（公開リポジトリに載せない）
+scripts/data/*.png
+scripts/data/*.pptx
+scripts/data/*.csv
+scripts/data/*.txt
+scripts/data/compare_*.json
+scripts/data/fv_*.json
+scripts/data/lp_compare_texts.json
+scripts/data/research_sheet.json
+scripts/data/slides_all.json
+scripts/kpi/kpi_report_st_data.json
+scripts/weekly_bq_cache.json
